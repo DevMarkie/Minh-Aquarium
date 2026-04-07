@@ -1,0 +1,60 @@
+DANH SÁCH CHỨC NĂNG DỰ ÁN WEBSITE MINH AQUARIUM
+
+I. GIAO DIỆN NGƯỜI DÙNG (CUSTOMER FRONTEND)
+
+1. Trang chủ (Home)
+- Header: Menu điều hướng, Tìm kiếm sản phẩm, Giỏ hàng, Đăng nhập/Đăng ký.
+- Banner nổi bật: Giới thiệu cửa hàng, Dịch vụ setup, Sản phẩm xu hướng.
+- Nội dung chính: Danh mục nổi bật (Sinh vật cảnh, Phụ kiện), Sản phẩm khuyến mãi.
+- Footer: Thông tin liên hệ (Địa chỉ, SĐT, Email, Mạng xã hội), Các Chính sách (Vận chuyển sinh vật, Bảo hành).
+
+2. Danh mục Sản phẩm (Bộ lọc & Tìm kiếm)
+- Cá/Tép cảnh: Phân loại theo dòng cá, dòng tép.
+- Phụ kiện & Thiết bị: Phân loại (Lọc, Đèn, Oxy, CO2, Nền, Đá/Lũa, Thức ăn, Chữa bệnh, Vệ sinh).
+- Cây thủy sinh: Phân loại theo loại cây.
+
+3. Chi tiết Sản phẩm
+- Hiển thị: Nhiều hình ảnh, giá bán, số lượng tồn kho.
+- Thông tin: Mô tả chi tiết, Thông số kỹ thuật / Môi trường sống (Nhiệt độ, pH phù hợp).
+- Tương tác: Thêm vào giỏ hàng, Đánh giá và bình luận (Review).
+
+4. Giỏ hàng & Điền Đơn hàng (Checkout)
+- Giỏ hàng: Thêm, sửa số lượng, xóa sản phẩm.
+- Vận chuyển: Tính phí ship, chọn hình thức giao hàng (lưu ý ship hỏa tốc cho cá sống).
+- Thanh toán: Điền thông tin người nhận, chọn phương thức (Tiền mặt / Chuyển khoản).
+
+5. Dịch vụ Setup Bể
+- Form yêu cầu: Điền thông tin cá nhân, kích thước bể dự kiến, phong cách yêu thích.
+- Chức năng: Gửi yêu cầu để nhân viên tư vấn báo giá.
+
+6. Kiến thức Thủy sinh (Blog)
+- Danh mục bài viết: Hướng dẫn người mới, Chữa bệnh cho cá, Cách setup.
+- Chi tiết bài biết.
+
+7. Trang Cá nhân (User Profile)
+- Xác thực: Đăng ký, Đăng nhập, Quên mật khẩu, Đăng xuất.
+- Thông tin: Cập nhật hồ sơ.
+- Quản lý đơn: Xem lịch sử mua hàng, theo dõi trạng thái đơn hàng hiện tại.
+
+8. Trợ giúp & Tương tác
+- Chatbot / Chat trực tiếp với nhân viên hỗ trợ.
+
+---
+
+II. TRANG QUẢN TRỊ (ADMIN DASHBOARD)
+
+1. Tổng quan (Dashboard)
+- Thống kê & Báo cáo: Doanh thu, số lượng đơn hàng mới, truy cập.
+
+2. Quản lý Sản phẩm & Danh mục
+- Danh mục: Tạo, sửa, xóa các nhóm sản phẩm (Cá, Lọc, Đèn...).
+- Sản phẩm: Cập nhật thông tin (Tên, giá, hình ảnh, mô tả, số lượng kho).
+
+3. Quản lý Đơn hàng & Dịch vụ
+- Đơn hàng: Tiếp nhận, xem chi tiết, cập nhật trạng thái (Chờ duyệt -> Đang giao -> Hoàn thành/Hủy).
+- Yêu cầu Setup: Quản lý danh sách khách đặt lịch setup, cập nhật tình trạng tư vấn.
+
+4. Quản lý Khách hàng & Nội dung
+- Người dùng: Quản lý tài khoản khách hàng.
+- Blog: Đăng bài viết chia sẻ kiến thức thủy sinh.
+- Chat nội bộ: Giao diện nhân viên phản hồi tin nhắn trực tiếp với khách lúc xem web.
