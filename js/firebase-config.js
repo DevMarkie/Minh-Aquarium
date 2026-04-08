@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getAnalytics, isSupported } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
@@ -17,8 +17,13 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const db = getFirestore(app);
 const auth = getAuth(app);
+
+// Analytics chỉ hoạt động trên HTTPS — bỏ qua khi chạy localhost
+let analytics = null;
+isSupported().then((supported) => {
+  if (supported) analytics = getAnalytics(app);
+}).catch(() => {});
 
 export { app, analytics, db, auth };
