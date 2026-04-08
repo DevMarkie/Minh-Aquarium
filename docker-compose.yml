@@ -1,4 +1,3 @@
-
 services:
   mysql:
     image: mysql:8.0
@@ -14,6 +13,31 @@ services:
     volumes:
       - ./db/database.sql:/docker-entrypoint-initdb.d/database.sql
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test:
+        ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pminh123"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: minh_aquarium_api
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: minh_user
+      DB_PASSWORD: minh123
+      DB_NAME: minh_aquarium
+      PORT: 3000
+    ports:
+      - "3000:3000"
 
 volumes:
   mysql_data:
