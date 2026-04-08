@@ -1,3 +1,7 @@
+import { db, auth } from './firebase-config.js';
+import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "firebase/auth";
+
 // Header background change on scroll
 window.addEventListener("scroll", () => {
   const header = document.querySelector(".site-header");
@@ -774,4 +778,64 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         document.head.appendChild(style);
     }
+});
+// ========= Firebase Auth Logic =========
+const authForm = document.getElementById('auth-form');
+const authToggleLink = document.getElementById('auth-toggle-link');
+const authTitle = document.getElementById('auth-title');
+const authSubtitle = document.getElementById('auth-subtitle');
+const authSubmitBtn = document.getElementById('auth-submit-btn');
+const authToggleText = document.getElementById('auth-toggle-text');
+const authRememberRow = document.getElementById('auth-remember-row');
+
+let isLoginMode = true;
+
+if (authToggleLink) {
+    authToggleLink.addEventListener('click', () => {
+        isLoginMode = !isLoginMode;
+        authTitle.textContent = isLoginMode ? 'Đăng nhập' : 'Đăng ký';
+        authSubtitle.textContent = isLoginMode ? 'Đăng nhập để theo dõi đơn hàng và tích điểm' : 'Tạo tài khoản mới để hưởng ưu đãi thành viên';
+        authSubmitBtn.textContent = isLoginMode ? 'Đăng nhập ngay' : 'Đăng ký tài khoản';
+        authToggleText.textContent = isLoginMode ? 'Chưa có tài khoản?' : 'Đã có tài khoản?';
+        authToggleLink.textContent = isLoginMode ? 'Đăng ký ngay' : 'Đăng nhập ngay';
+        if (authRememberRow) authRememberRow.style.display = isLoginMode ? 'flex' : 'none';
+    });
+}
+
+if (authForm) {
+    authForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('auth-email').value;
+        const password = document.getElementById('auth-password').value;
+
+        try {
+            if (isLoginMode) {
+                await signInWithEmailAndPassword(auth, email, password);
+                alert('🎉 Đăng nhập thành công!');
+            } else {
+                await createUserWithEmailAndPassword(auth, email, password);
+                alert('🎉 Đăng ký thành công! Chào mừng thành viên mới.');
+            }
+            window.location.href = 'index.html';
+        } catch (error) {
+            console.error(error);
+            alert(`❌ Lỗi: ${error.message}`);
+        }
+    });
+}
+
+// Track Auth State
+onAuthStateChanged(auth, (user) => {
+    const loginBtns = document.querySelectorAll('.btn-login');
+    loginBtns.forEach(btn => {
+        if (user) {
+            btn.innerHTML = `<i class="fa-solid fa-user"></i> ${user.email.split('@')[0]}`;
+            btn.onclick = () => {
+                if (confirm('Bạn muốn đăng xuất?')) signOut(auth);
+            };
+        } else {
+            btn.innerHTML = 'Đăng nhập';
+            btn.onclick = () => window.location.href = 'login.html';
+        }
+    });
 });
