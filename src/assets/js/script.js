@@ -402,7 +402,7 @@ if (
         totalCartValue += rawPrice * item.quantity;
         return `
                 <div style="display: flex; align-items: center; border-bottom: 1px solid #e2e8f0; padding: 15px 0; gap: 15px;">
-                    <img src="${item.imgUrl || "anh/logo_transparent.png"}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                    <img src="${item.imgUrl || "./assets/images/anh/logo_transparent.png"}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
                     <div style="flex: 1;">
                         <h4 style="margin: 0 0 5px 0; font-size: 16px;">${item.name}</h4>
                         <div style="color: var(--primary); font-weight: bold;">${item.priceText}</div>
@@ -916,7 +916,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. Get checked categories
     const checkedCats = Array.from(checkboxes)
       .filter((cb) => cb.checked)
-      .map((cb) => normalizeText(cb.parentElement.textContent));
+      .map((cb) => {
+        const rawCat = cb.dataset.category || cb.parentElement.textContent;
+        return normalizeText(rawCat);
+      });
 
     // 3. Get price range
     let minPrice = parseInt(priceInputs[0].value) || 0;

@@ -1,6 +1,6 @@
 import re
 
-html_file = "products.html"
+html_file = "src/products.html"
 
 with open(html_file, 'r', encoding='utf-8') as f:
     text = f.read()

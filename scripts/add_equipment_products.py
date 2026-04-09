@@ -4,9 +4,9 @@ import urllib.parse
 import random
 
 new_dirs = [
-    (r"anh\máy lọc và vật liệu lọc", "Thiết Bị Thủy Sinh"),
-    (r"anh\phân nền , cốt nền , cát trải nền", "Phân Nền Thủy Sinh"),
-    (r"anh\cây thủy sinh", "Cây Thủy Sinh")
+    (r"src\assets\images\máy lọc và vật liệu lọc", "Thiết Bị Thủy Sinh"),
+    (r"src\assets\images\phân nền , cốt nền , cát trải nền", "Phân Nền Thủy Sinh"),
+    (r"src\assets\images\cây thủy sinh", "Cây Thủy Sinh")
 ]
 
 price_rules = {
@@ -71,7 +71,7 @@ for d, cat_name in new_dirs:
 
 print(f"Prepared {count} new products.")
 
-html_file = "products.html"
+html_file = "src/products.html"
 with open(html_file, 'r', encoding='utf-8') as f:
     content = f.read()
 

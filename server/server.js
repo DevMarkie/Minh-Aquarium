@@ -4,14 +4,24 @@ const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2/promise");
 const path = require("path");
+const fs = require("fs");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname)));
+const projectRoot = path.join(__dirname, "..");
+const distPath = path.join(projectRoot, "dist");
+const srcPath = path.join(projectRoot, "src");
+const hasDist = fs.existsSync(distPath);
+const staticRoot = hasDist ? distPath : srcPath;
+
+app.use(express.static(staticRoot));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  const indexPath = hasDist
+    ? path.join(distPath, "index.html")
+    : path.join(srcPath, "index.html");
+  res.sendFile(indexPath);
 });
 
 // Create a MySQL connection pool

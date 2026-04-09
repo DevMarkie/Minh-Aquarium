@@ -2,8 +2,8 @@ import os
 import re
 import urllib.parse
 
-dirs = [r"anh\cá", r"anh\tép"]
-html_file = "products.html"
+dirs = [r"src\assets\images\cá", r"src\assets\images\tép"]
+html_file = "src/products.html"
 
 # Read all image names
 images_data = []
@@ -21,7 +21,7 @@ for idx, (cat_name, img, folder) in enumerate(images_data):
     # Get product name from filename
     name = os.path.splitext(img)[0].title()
     # Normalize path and encode it properly
-    # folder ends up as anh/cá or anh/tép
+    # folder ends up as src/assets/images/cá or src/assets/images/tép
     unix_folder = folder.replace('\\', '/')
     path = f"{unix_folder}/{img}"
     encoded_path = urllib.parse.quote(path)

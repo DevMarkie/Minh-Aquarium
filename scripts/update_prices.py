@@ -1,6 +1,6 @@
 import re
 
-html_file = "products.html"
+html_file = "src/products.html"
 
 # Typical VN market prices mapped by substrings
 price_map = {

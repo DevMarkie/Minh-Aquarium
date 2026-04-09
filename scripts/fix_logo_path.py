@@ -1,14 +1,18 @@
 import glob
 import re
 
-html_files = glob.glob('*.html')
+html_files = glob.glob('src/*.html')
 for file in html_files:
     try:
         with open(file, 'r', encoding='utf-8') as f:
             content = f.read()
             
         # Replace the src attribute specifically to be safe
-        new_content = re.sub(r'src="logo_transparent\.png"', 'src="anh/logo_transparent.png"', content)
+        new_content = re.sub(
+            r'src="logo_transparent\.png"',
+            'src="./assets/images/logo_transparent.png"',
+            content,
+        )
         
         with open(file, 'w', encoding='utf-8') as f:
             f.write(new_content)

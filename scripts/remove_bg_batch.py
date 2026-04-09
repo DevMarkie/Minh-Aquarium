@@ -1,7 +1,11 @@
 from rembg import remove
 import os
 
-images = ["anh/banner_part1.png", "anh/banner_part2.png", "anh/banner_part3.png"]
+images = [
+    "src/assets/images/banner_part1.png",
+    "src/assets/images/banner_part2.png",
+    "src/assets/images/banner_part3.png",
+]
 
 print("Đang tải AI Model tách nền...")
 for img_path in images:

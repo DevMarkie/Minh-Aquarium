@@ -3,7 +3,7 @@ import re
 import urllib.parse
 import random
 
-target_dir = r"anh\đèn thủy sinh"
+target_dir = r"src\assets\images\đèn thủy sinh"
 cat_name = "Đèn Chiếu Sáng"
 
 html_blocks = []
@@ -53,7 +53,7 @@ if os.path.exists(target_dir):
 
 print(f"Prepared {count} light products.")
 
-html_file = "products.html"
+html_file = "src/products.html"
 with open(html_file, 'r', encoding='utf-8') as f:
     content = f.read()
 
