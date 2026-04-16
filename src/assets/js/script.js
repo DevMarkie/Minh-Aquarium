@@ -247,6 +247,7 @@ let isCheckoutView = false;
 let checkoutAddress = "";
 let shippingMethod = "standard"; // standard | express
 let shippingDistance = 0; // km (for express eligibility)
+const FREE_SHIP_THRESHOLD = 500000;
 
 const NORTH_PROVINCES = [
   "ha noi",
@@ -343,6 +344,38 @@ function getShippingFeeByRegion(region) {
   if (region === "central") return 20000;
   if (region === "south") return 25000;
   return 0;
+}
+
+function calculateCartSubtotal(items = cart) {
+  return items.reduce(
+    (sum, item) => sum + parsePrice(item.priceText) * (item.quantity || 0),
+    0,
+  );
+}
+
+function computeShippingDetails(address, subtotal) {
+  const region = detectRegionFromAddress(address);
+  let shippingCost = getShippingFeeByRegion(region);
+  if (subtotal >= FREE_SHIP_THRESHOLD) {
+    shippingCost = 0;
+  }
+  return { region, shippingCost };
+}
+
+function formatVnd(amount) {
+  return `${amount.toLocaleString("vi-VN")}đ`;
+}
+
+function getShippingSummaryLabel(shippingCost, subtotal, hasAddress) {
+  if (subtotal >= FREE_SHIP_THRESHOLD) return "Miễn phí";
+  if (shippingCost > 0) return formatVnd(shippingCost);
+  return hasAddress ? "Chưa xác định" : "Nhập địa chỉ để tính";
+}
+
+function getShippingOptionLabel(shippingCost, subtotal) {
+  if (subtotal >= FREE_SHIP_THRESHOLD) return "Miễn phí";
+  if (shippingCost > 0) return formatVnd(shippingCost);
+  return "-";
 }
 
 function getRegionLabel(region) {
@@ -452,14 +485,26 @@ if (
             `;
     } else {
       // VIEW: CHECKOUT PAGE
-      const shippingRegion = detectRegionFromAddress(checkoutAddress);
+      const hasAddress = normalizeText(checkoutAddress).length > 0;
+      const { region: shippingRegion, shippingCost } = computeShippingDetails(
+        checkoutAddress,
+        totalCartValue,
+      );
       const expressAvailable = isExpressAvailable(shippingDistance);
       if (shippingMethod === "express" && !expressAvailable) {
         shippingMethod = "standard";
       }
 
-      let shippingCost = getShippingFeeByRegion(shippingRegion);
-      let finalTotal = totalCartValue + shippingCost;
+      const finalTotal = totalCartValue + shippingCost;
+      const shippingSummaryLabel = getShippingSummaryLabel(
+        shippingCost,
+        totalCartValue,
+        hasAddress,
+      );
+      const shippingOptionLabel = getShippingOptionLabel(
+        shippingCost,
+        totalCartValue,
+      );
 
       mainContainer.innerHTML = `
                 <h1 style="font-size: 28px; margin-bottom: 30px;">Thanh toán</h1>
@@ -487,7 +532,7 @@ if (
                                 <div>Miền Trung: <strong>20.000đ</strong></div>
                                 <div>Miền Nam: <strong>25.000đ</strong></div>
                               </div>
-                              <div style="margin-top:10px; font-size:14px; color:#0f172a;">Khu vực hiện tại: <strong>${getRegionLabel(shippingRegion)}</strong></div>
+                              <div style="margin-top:10px; font-size:14px; color:#0f172a;">Khu vực hiện tại: <strong id="checkout-region-label">${getRegionLabel(shippingRegion)}</strong></div>
                               <div style="font-size:12px; color:#64748b; margin-top:4px;">Nhập tỉnh/thành trong địa chỉ để hệ thống tự tính phí ship.</div>
                             </div>
 
@@ -502,7 +547,7 @@ if (
                                 <input type="radio" name="shipping-method" ${shippingMethod === "standard" ? "checked" : ""}>
                                 <strong>Giao tiêu chuẩn</strong>
                               </div>
-                              <strong>${shippingCost > 0 ? shippingCost.toLocaleString("vi-VN") + "đ" : "-"}</strong>
+                              <strong id="checkout-ship-standard">${shippingOptionLabel}</strong>
                             </div>
 
                             <div class="shipping-option ${shippingMethod === "express" ? "active" : ""}" style="${expressAvailable ? "" : "opacity:0.6; cursor:not-allowed;"}" onclick="window.setShippingMethod('express')">
@@ -510,7 +555,7 @@ if (
                                 <input type="radio" name="shipping-method" ${shippingMethod === "express" ? "checked" : ""} ${expressAvailable ? "" : "disabled"}>
                                 <strong>Giao hỏa tốc (≤ 20km)</strong>
                               </div>
-                              <strong>${shippingCost > 0 ? shippingCost.toLocaleString("vi-VN") + "đ" : "-"}</strong>
+                              <strong id="checkout-ship-express">${shippingOptionLabel}</strong>
                             </div>
 
                             ${expressAvailable ? "" : '<div style="font-size:12px; color:#ef4444; margin-top:8px;">Không thể chọn hỏa tốc vì khoảng cách lớn hơn 20km.</div>'}
@@ -548,12 +593,12 @@ if (
                             </div>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 15px;">
                                 <span>Phí vận chuyển:</span>
-                              <strong>${shippingCost > 0 ? shippingCost.toLocaleString("vi-VN") + "đ" : '<span style="color:#f59e0b;">Nhập địa chỉ để tính</span>'}</strong>
+                              <strong id="checkout-shipping-cost">${shippingSummaryLabel}</strong>
                             </div>
                             
                             <div style="display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 1px solid #e2e8f0; font-size: 18px;">
                                 <b>Tổng cộng:</b>
-                                <b style="color: var(--primary); font-size: 22px;">${finalTotal.toLocaleString("vi-VN")}đ</b>
+                                <b id="checkout-total-amount" style="color: var(--primary); font-size: 22px;">${formatVnd(finalTotal)}</b>
                             </div>
                             <button onclick="window.submitOrder()" class="btn" style="width: 100%; margin-top: 25px; padding: 15px 0; font-size: 16px; background: #0f172a; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
                                 Đặt hàng
@@ -587,9 +632,43 @@ if (
     window.scrollTo(0, 0);
   };
 
+  function updateCheckoutSummary() {
+    if (!isCheckoutView) return;
+    const hasAddress = normalizeText(checkoutAddress).length > 0;
+    const subtotal = calculateCartSubtotal();
+    const { region, shippingCost } = computeShippingDetails(
+      checkoutAddress,
+      subtotal,
+    );
+    const finalTotal = subtotal + shippingCost;
+
+    const regionEl = document.getElementById("checkout-region-label");
+    if (regionEl) regionEl.textContent = getRegionLabel(region);
+
+    const shippingSummaryEl = document.getElementById("checkout-shipping-cost");
+    if (shippingSummaryEl) {
+      shippingSummaryEl.textContent = getShippingSummaryLabel(
+        shippingCost,
+        subtotal,
+        hasAddress,
+      );
+    }
+
+    const shippingStandardEl = document.getElementById(
+      "checkout-ship-standard",
+    );
+    const shippingExpressEl = document.getElementById("checkout-ship-express");
+    const optionLabel = getShippingOptionLabel(shippingCost, subtotal);
+    if (shippingStandardEl) shippingStandardEl.textContent = optionLabel;
+    if (shippingExpressEl) shippingExpressEl.textContent = optionLabel;
+
+    const totalEl = document.getElementById("checkout-total-amount");
+    if (totalEl) totalEl.textContent = formatVnd(finalTotal);
+  }
+
   window.updateCheckoutAddress = function (address) {
     checkoutAddress = address || "";
-    renderCartPage();
+    updateCheckoutSummary();
   };
 
   window.setShippingMethod = function (method) {
@@ -624,14 +703,222 @@ if (
   renderCartPage();
 }
 
-// Chat widget toggle (simple alert for demo)
-const chatBtn = document.querySelector(".chat-btn");
-if (chatBtn) {
-  chatBtn.addEventListener("click", () => {
-    alert(
-      "Chào mừng bạn đến với Minh Aquarium! Vui lòng để lại lời nhắn, nhân viên của chúng tôi sẽ phản hồi trong giây lát.",
-    );
+// ========= Chatbot Widget =========
+const CHAT_SESSION_STORAGE_KEY = "minhaq_chat_session_id";
+
+function initChatbotWidget() {
+  if (document.getElementById("ma-chat-widget-root")) return;
+
+  if (!document.getElementById("ma-chat-widget-style")) {
+    const style = document.createElement("style");
+    style.id = "ma-chat-widget-style";
+    style.innerHTML = `
+      .ma-chat-root { position: fixed; right: 18px; bottom: 18px; z-index: 100000; font-family: 'Outfit', sans-serif; }
+      .ma-chat-toggle { width: 58px; height: 58px; border-radius: 50%; border: none; background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; box-shadow: 0 12px 30px rgba(2, 132, 199, 0.35); cursor: pointer; font-size: 22px; }
+      .ma-chat-panel { position: absolute; right: 0; bottom: 72px; width: min(380px, calc(100vw - 24px)); height: 520px; background: #fff; border-radius: 16px; box-shadow: 0 20px 40px rgba(15, 23, 42, 0.22); border: 1px solid #e2e8f0; display: none; overflow: hidden; }
+      .ma-chat-panel.open { display: flex; flex-direction: column; }
+      .ma-chat-header { padding: 14px 16px; color: #fff; background: linear-gradient(135deg, #0ea5e9, #0369a1); display: flex; justify-content: space-between; align-items: center; }
+      .ma-chat-title { font-size: 16px; font-weight: 700; }
+      .ma-chat-sub { font-size: 12px; opacity: 0.95; margin-top: 2px; }
+      .ma-chat-close { border: none; background: transparent; color: #fff; cursor: pointer; font-size: 18px; }
+      .ma-chat-body { flex: 1; overflow-y: auto; background: #f8fafc; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+      .ma-chat-message { max-width: 86%; font-size: 14px; line-height: 1.45; padding: 10px 12px; border-radius: 12px; white-space: pre-wrap; word-break: break-word; }
+      .ma-chat-message.bot { align-self: flex-start; background: #fff; border: 1px solid #e2e8f0; color: #0f172a; }
+      .ma-chat-message.user { align-self: flex-end; background: #0ea5e9; color: #fff; }
+      .ma-chat-handoff { margin: 0 12px 10px; padding: 10px; border-radius: 10px; background: #fff7ed; border: 1px solid #fed7aa; display: none; }
+      .ma-chat-handoff p { margin: 0 0 8px; font-size: 13px; color: #9a3412; }
+      .ma-chat-handoff .row { display: flex; gap: 8px; flex-wrap: wrap; }
+      .ma-chat-handoff a { text-decoration: none; font-size: 13px; font-weight: 600; padding: 8px 10px; border-radius: 8px; background: #f97316; color: #fff; }
+      .ma-chat-compose { border-top: 1px solid #e2e8f0; background: #fff; padding: 10px; display: flex; gap: 8px; }
+      .ma-chat-input { flex: 1; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; font-size: 14px; outline: none; }
+      .ma-chat-input:focus { border-color: #0ea5e9; }
+      .ma-chat-send { border: none; border-radius: 10px; padding: 0 14px; background: #0f172a; color: #fff; font-weight: 700; cursor: pointer; }
+      .ma-chat-send:disabled, .ma-chat-input:disabled { opacity: 0.65; cursor: not-allowed; }
+      @media (max-width: 480px) {
+        .ma-chat-root { right: 10px; bottom: 10px; }
+        .ma-chat-panel { right: -2px; bottom: 68px; width: calc(100vw - 20px); height: 70vh; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  const root = document.createElement("div");
+  root.id = "ma-chat-widget-root";
+  root.className = "ma-chat-root";
+  root.innerHTML = `
+    <button class="ma-chat-toggle" id="ma-chat-toggle" aria-label="Mở chatbot">
+      <i class="fa-solid fa-comments"></i>
+    </button>
+    <div class="ma-chat-panel" id="ma-chat-panel">
+      <div class="ma-chat-header">
+        <div>
+          <div class="ma-chat-title">Tư vấn Minh Aquarium</div>
+          <div class="ma-chat-sub">Gợi ý sản phẩm, setup, chăm sóc bể</div>
+        </div>
+        <button class="ma-chat-close" id="ma-chat-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="ma-chat-body" id="ma-chat-body"></div>
+      <div class="ma-chat-handoff" id="ma-chat-handoff">
+        <p>Bot gợi ý bạn liên hệ nhân viên để hỗ trợ nhanh hơn:</p>
+        <div class="row" id="ma-chat-handoff-row"></div>
+      </div>
+      <div class="ma-chat-compose">
+        <input id="ma-chat-input" class="ma-chat-input" type="text" maxlength="500" placeholder="Nhập câu hỏi..." />
+        <button id="ma-chat-send" class="ma-chat-send">Gửi</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(root);
+
+  const panel = document.getElementById("ma-chat-panel");
+  const body = document.getElementById("ma-chat-body");
+  const handoffBox = document.getElementById("ma-chat-handoff");
+  const handoffRow = document.getElementById("ma-chat-handoff-row");
+  const input = document.getElementById("ma-chat-input");
+  const sendBtn = document.getElementById("ma-chat-send");
+  const openBtn = document.getElementById("ma-chat-toggle");
+  const closeBtn = document.getElementById("ma-chat-close");
+
+  let sessionId = localStorage.getItem(CHAT_SESSION_STORAGE_KEY) || "";
+  let loadedHistory = false;
+  let sending = false;
+
+  function addMessage(role, text) {
+    const bubble = document.createElement("div");
+    bubble.className = `ma-chat-message ${role === "user" ? "user" : "bot"}`;
+    bubble.textContent = text;
+    body.appendChild(bubble);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function setSendingState(state) {
+    sending = state;
+    input.disabled = state;
+    sendBtn.disabled = state;
+    sendBtn.textContent = state ? "..." : "Gửi";
+  }
+
+  function renderHandoff(handoff) {
+    if (!handoff?.required) {
+      handoffBox.style.display = "none";
+      handoffRow.innerHTML = "";
+      return;
+    }
+
+    handoffRow.innerHTML = "";
+    if (handoff.phone) {
+      const a = document.createElement("a");
+      a.href = `tel:${handoff.phone}`;
+      a.textContent = `Gọi ${handoff.phone}`;
+      handoffRow.appendChild(a);
+    }
+    if (handoff.zaloLink) {
+      const a = document.createElement("a");
+      a.href = handoff.zaloLink;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = "Nhắn Zalo nhân viên";
+      handoffRow.appendChild(a);
+    }
+    handoffBox.style.display = "block";
+  }
+
+  async function loadHistory() {
+    if (!sessionId || loadedHistory) return;
+    try {
+      const res = await fetch(`/api/chatbot/history/${sessionId}`);
+      const data = await res.json();
+      if (res.ok && data.success && Array.isArray(data.messages)) {
+        data.messages.forEach((msg) => {
+          addMessage(msg.role === "user" ? "user" : "assistant", msg.content);
+        });
+      }
+    } catch (_error) {
+      // Ignore history loading failures and continue with fresh session.
+    } finally {
+      loadedHistory = true;
+    }
+  }
+
+  async function sendMessage() {
+    if (sending) return;
+    const message = (input.value || "").trim();
+    if (!message) return;
+
+    input.value = "";
+    addMessage("user", message);
+    renderHandoff(null);
+    setSendingState(true);
+
+    try {
+      const res = await fetch("/api/chatbot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message, sessionId }),
+      });
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data?.error || "Chatbot đang bận.");
+      }
+
+      if (data.sessionId) {
+        sessionId = String(data.sessionId);
+        localStorage.setItem(CHAT_SESSION_STORAGE_KEY, sessionId);
+      }
+
+      addMessage("assistant", data.answer || "Mình chưa có phản hồi phù hợp.");
+      renderHandoff(data.handoff);
+    } catch (error) {
+      addMessage(
+        "assistant",
+        error.message ||
+          "Hiện bot đang bận. Bạn vui lòng gọi 0123456789 để được nhân viên hỗ trợ.",
+      );
+      renderHandoff({ required: true, phone: "0123456789" });
+    } finally {
+      setSendingState(false);
+    }
+  }
+
+  function openPanel() {
+    panel.classList.add("open");
+    if (body.children.length === 0) {
+      addMessage(
+        "assistant",
+        "Chào bạn, mình là trợ lý Minh Aquarium. Bạn đang cần tư vấn cá, tép, cây, thiết bị hay setup bể?",
+      );
+    }
+    loadHistory();
+    input.focus();
+  }
+
+  function closePanel() {
+    panel.classList.remove("open");
+  }
+
+  openBtn.addEventListener("click", () => {
+    if (panel.classList.contains("open")) {
+      closePanel();
+    } else {
+      openPanel();
+    }
   });
+
+  closeBtn.addEventListener("click", closePanel);
+  sendBtn.addEventListener("click", sendMessage);
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initChatbotWidget);
+} else {
+  initChatbotWidget();
 }
 
 // Navigation for Cart and Login
@@ -889,7 +1176,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ========= Advanced Sidebar Filtering =========
-document.addEventListener("DOMContentLoaded", () => {
+function initAdvancedSidebarFilters() {
   const sidebar = document.querySelector(".sidebar-filter");
   if (!sidebar) return; // Only run on products page
 
@@ -1013,7 +1300,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (headerSearchInput) headerSearchInput.value = q;
   }
   applyAdvancedFilters();
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initAdvancedSidebarFilters);
+} else {
+  initAdvancedSidebarFilters();
+}
 
 // ========= Aqua Bubble Background Effect =========
 document.addEventListener("DOMContentLoaded", () => {
