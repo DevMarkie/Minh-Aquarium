@@ -1,7 +1,46 @@
+# Dependencies
 node_modules/
-.env
-*.log
+package-lock.json.backup
 
-# Python local env
+# Build outputs
+dist/
+dist-ssr/
+build/
+
+# Local Environment Variables & Credentials
+.env
+.env.local
+.env.*.local
+*.env
+serviceAccountKey.json
+*serviceAccount*.json
+firebase-adminsdk*.json
+
+# Logs & Temporary files
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+tmp/
+temp/
+
+# Test & Coverage
+test-results/
+playwright-report/
+.nyc_output/
+coverage/
+
+# Python local env & cache
 .venv/
+venv/
+env/
 __pycache__/
+*.pyc
+*.pyo
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

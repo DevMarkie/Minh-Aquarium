@@ -9,38 +9,92 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <div class="header-main">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon"><img src="./assets/images/anh/logo_transparent.png" alt="Minh Aquarium Logo"></div>
-                    <div class="logo-text">
-                        <span class="brand-name">Minh Aquarium</span>
-                        <span class="brand-slogan">Thủy sinh chuyên nghiệp</span>
-                    </div>
-                </a>
-                
-                <div class="search-container">
-                    <i class="fa-solid fa-search search-icon"></i>
-                    <input type="text" placeholder="Tìm kiếm sản phẩm..." class="search-input">
-                </div>
-                
-                <div class="header-actions">
-                    <button class="cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-                    <button class="btn btn-login">Đăng nhập</button>
-                </div>
-            </div>
+    <!-- ===== TOP UTILITY BAR ===== -->
+    <div class="top-bar">
+      <div class="container top-bar-inner">
+        <div class="top-bar-left">
+          <a href="#"><i class="fa-solid fa-plane"></i> Giao hàng toàn quốc</a>
+          <span class="top-bar-sep">|</span>
+          <a href="#"><i class="fa-solid fa-plane"></i> Nhận hàng thanh toán sau (COD)</a>
+          <span class="top-bar-sep">|</span>
+          <a href="#"><i class="fa-solid fa-receipt"></i> Kiểm tra đơn hàng</a>
         </div>
-        <nav class="main-nav border-top">
-            <div class="container">
-                <ul>
-                    <li><a href="index.html">Trang chủ</a></li>
-                    <li><a href="products.html">Sản phẩm</a></li>
-                    <li><a href="blog.html">Kiến thức</a></li>
-                    <li><a href="services.html">Dịch vụ Setup</a></li>
-                </ul>
+        <div class="top-bar-right">
+          <a href="login.html"><i class="fa-regular fa-user"></i> Đăng nhập</a>
+          <span class="top-bar-sep">|</span>
+          <a href="login.html"><i class="fa-solid fa-user-plus"></i> Đăng ký</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MAIN HEADER ===== -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-main">
+          <!-- Logo -->
+          <a href="index.html" class="logo">
+            <div class="logo-icon">
+              <img src="./assets/images/anh/logo_transparent.png" alt="Minh Aquarium Logo" />
             </div>
-        </nav>
+            <div class="logo-text">
+              <span class="brand-name">Minh Aquarium</span>
+              <span class="brand-slogan">Thủy sinh chuyên nghiệp</span>
+            </div>
+          </a>
+
+          <!-- Search -->
+          <div class="search-container">
+            <input type="text" placeholder="Tìm kiếm sản phẩm..." class="search-input" id="search-input" />
+            <button class="search-btn" aria-label="Tìm kiếm"><i class="fa-solid fa-search"></i></button>
+          </div>
+
+          <!-- Actions -->
+          <div class="header-actions">
+            <div class="header-hotline">
+              <div class="hotline-icon"><i class="fa-solid fa-phone"></i></div>
+              <div class="hotline-info">
+                <small>HOTLINE</small>
+                <strong>0123 456 789</strong>
+              </div>
+            </div>
+            <button class="cart-btn" id="cart-btn" aria-label="Giỏ hàng">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span class="cart-badge" id="cart-count">0</span>
+            </button>
+            <button class="btn-login btn" id="login-btn">Đăng nhập</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== RED NAV BAR ===== -->
+      <nav class="main-nav">
+        <div class="container nav-inner">
+          <!-- Category Toggle -->
+          <button class="cat-menu-toggle" id="cat-menu-toggle" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i> DANH MỤC SẢN PHẨM
+          </button>
+          <!-- Category Dropdown -->
+          <div class="cat-dropdown" id="cat-dropdown">
+            <a href="products.html?q=Cá Cảnh"><i class="fa-solid fa-fish"></i> Cá Cảnh</a>
+            <a href="products.html?q=Tép Cảnh"><i class="fa-solid fa-shrimp"></i> Tép Cảnh</a>
+            <a href="products.html?q=Cây Thủy Sinh"><i class="fa-solid fa-seedling"></i> Cây Thủy Sinh</a>
+            <a href="products.html?q=Đèn Thủy Sinh"><i class="fa-solid fa-lightbulb"></i> Đèn Thủy Sinh</a>
+            <a href="products.html?q=Máy Lọc"><i class="fa-solid fa-filter"></i> Máy Lọc, Vật Liệu Lọc</a>
+            <a href="products.html?q=Phân Nền"><i class="fa-solid fa-layer-group"></i> Phân Nền, Cốt Nền</a>
+            <a href="products.html?q=Thức Ăn"><i class="fa-solid fa-bowl-food"></i> Thức Ăn Cho Cá/Tép</a>
+            <a href="products.html?q=Thuốc"><i class="fa-solid fa-pills"></i> Thuốc & Chế Phẩm</a>
+            <a href="products.html?q=Phụ Kiện"><i class="fa-solid fa-box-open"></i> Phụ Kiện Khác</a>
+          </div>
+          <!-- Nav Links -->
+          <div class="nav-links">
+            <a href="index.html">Trang chủ</a>
+            <a href="blog.html">Kiến thức thủy sinh</a>
+            <a href="products.html">Phụ kiện thủy sinh</a>
+            <a href="products.html?q=Cá Cảnh">Cá cảnh, tép cảnh</a>
+            <a href="services.html">Mẫu bể đẹp</a>
+          </div>
+        </div>
+      </nav>
     </header>
 
     <main class="page-container container" style="padding: 60px 20px;">

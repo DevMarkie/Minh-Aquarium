@@ -20,10 +20,19 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Analytics chỉ hoạt động trên HTTPS — bỏ qua khi chạy localhost
+// Analytics chỉ bật trên production HTTPS để tránh lỗi network khi dev/test local.
 let analytics = null;
-isSupported().then((supported) => {
-  if (supported) analytics = getAnalytics(app);
-}).catch(() => {});
+const canUseAnalytics =
+  typeof window !== "undefined" &&
+  window.location.protocol === "https:" &&
+  !["localhost", "127.0.0.1"].includes(window.location.hostname);
+
+if (canUseAnalytics) {
+  isSupported()
+    .then((supported) => {
+      if (supported) analytics = getAnalytics(app);
+    })
+    .catch(() => {});
+}
 
 export { app, analytics, db, auth };

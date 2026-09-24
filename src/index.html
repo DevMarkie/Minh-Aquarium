@@ -3,22 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minh Aquarium - Cửa Hàng Thủy Sinh Chuyên Nghiệp</title>
-    <link rel="stylesheet" href="./assets/css/style.css?v=13" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <title>Minh Aquarium - Cửa Hàng Thủy Sinh Chuyên Nghiệp | Cá Cảnh, Tép, Cây Thủy Sinh</title>
+    <meta name="description" content="Minh Aquarium - Hệ thống cửa hàng thủy sinh chuyên nghiệp tại Hà Đông, Hà Nội. Cung cấp cá cảnh, tép cảnh, cây thủy sinh, thiết bị lọc, đèn thủy sinh, phân nền chính hãng. Giao hàng toàn quốc, hỗ trợ COD." />
+    <link rel="stylesheet" href="./assets/css/style.css?v=20" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   </head>
   <body>
+
+    <!-- ===== TOP UTILITY BAR ===== -->
+    <div class="top-bar">
+      <div class="container top-bar-inner">
+        <div class="top-bar-left">
+          <a href="#"><i class="fa-solid fa-plane"></i> Giao hàng toàn quốc</a>
+          <span class="top-bar-sep">|</span>
+          <a href="#"><i class="fa-solid fa-plane"></i> Nhận hàng thanh toán sau (COD)</a>
+          <span class="top-bar-sep">|</span>
+          <a href="#"><i class="fa-solid fa-receipt"></i> Kiểm tra đơn hàng</a>
+        </div>
+        <div class="top-bar-right">
+          <a href="login.html"><i class="fa-regular fa-user"></i> Đăng nhập</a>
+          <span class="top-bar-sep">|</span>
+          <a href="login.html"><i class="fa-solid fa-user-plus"></i> Đăng ký</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MAIN HEADER ===== -->
     <header class="site-header">
       <div class="container">
         <div class="header-main">
-          <div class="logo">
+          <!-- Logo -->
+          <a href="index.html" class="logo">
             <div class="logo-icon">
               <img src="./assets/images/anh/logo_transparent.png" alt="Minh Aquarium Logo" />
             </div>
@@ -26,227 +42,297 @@
               <span class="brand-name">Minh Aquarium</span>
               <span class="brand-slogan">Thủy sinh chuyên nghiệp</span>
             </div>
-          </div>
+          </a>
 
+          <!-- Search -->
           <div class="search-container">
-            <i class="fa-solid fa-search search-icon"></i>
-            <input
-              type="text"
-              placeholder="Tìm kiếm sản phẩm..."
-              class="search-input"
-            />
+            <input type="text" placeholder="Tìm kiếm sản phẩm..." class="search-input" id="search-input" />
+            <button class="search-btn" aria-label="Tìm kiếm"><i class="fa-solid fa-search"></i></button>
           </div>
 
+          <!-- Actions -->
           <div class="header-actions">
-            <button class="cart-btn">
+            <div class="header-hotline">
+              <div class="hotline-icon"><i class="fa-solid fa-phone"></i></div>
+              <div class="hotline-info">
+                <small>HOTLINE</small>
+                <strong>0123 456 789</strong>
+              </div>
+            </div>
+            <button class="cart-btn" id="cart-btn" aria-label="Giỏ hàng">
               <i class="fa-solid fa-cart-shopping"></i>
+              <span class="cart-badge" id="cart-count">0</span>
             </button>
-            <button class="btn btn-login">Đăng nhập</button>
+            <button class="btn-login btn" id="login-btn">Đăng nhập</button>
           </div>
         </div>
       </div>
-      <nav class="main-nav border-top">
-        <div class="container">
-          <ul>
-            <li><a href="index.html" class="active">Trang chủ</a></li>
-            <li><a href="products.html">Sản phẩm</a></li>
-            <li><a href="blog.html">Kiến thức</a></li>
-            <li><a href="services.html">Dịch vụ Setup</a></li>
-          </ul>
+
+      <!-- ===== RED NAV BAR ===== -->
+      <nav class="main-nav">
+        <div class="container nav-inner">
+          <!-- Category Toggle -->
+          <button class="cat-menu-toggle" id="cat-menu-toggle" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i> DANH MỤC SẢN PHẨM
+          </button>
+          <!-- Category Dropdown -->
+          <div class="cat-dropdown" id="cat-dropdown">
+            <a href="products.html?q=Cá Cảnh"><i class="fa-solid fa-fish"></i> Cá Cảnh</a>
+            <a href="products.html?q=Tép Cảnh"><i class="fa-solid fa-shrimp"></i> Tép Cảnh</a>
+            <a href="products.html?q=Cây Thủy Sinh"><i class="fa-solid fa-seedling"></i> Cây Thủy Sinh</a>
+            <a href="products.html?q=Đèn Thủy Sinh"><i class="fa-solid fa-lightbulb"></i> Đèn Thủy Sinh</a>
+            <a href="products.html?q=Máy Lọc"><i class="fa-solid fa-filter"></i> Máy Lọc, Vật Liệu Lọc</a>
+            <a href="products.html?q=Phân Nền"><i class="fa-solid fa-layer-group"></i> Phân Nền, Cốt Nền</a>
+            <a href="products.html?q=Thức Ăn"><i class="fa-solid fa-bowl-food"></i> Thức Ăn Cho Cá/Tép</a>
+            <a href="products.html?q=Thuốc"><i class="fa-solid fa-pills"></i> Thuốc & Chế Phẩm</a>
+            <a href="products.html?q=Phụ Kiện"><i class="fa-solid fa-box-open"></i> Phụ Kiện Khác</a>
+          </div>
+          <!-- Nav Links -->
+          <div class="nav-links">
+            <a href="index.html" class="active">Trang chủ</a>
+            <a href="blog.html">Kiến thức thủy sinh</a>
+            <a href="products.html">Phụ kiện thủy sinh</a>
+            <a href="products.html?q=Cá Cảnh">Cá cảnh, tép cảnh</a>
+            <a href="services.html">Mẫu bể đẹp</a>
+          </div>
         </div>
       </nav>
     </header>
 
     <main>
-      <!-- Fullwidth Hero Carousel Banner -->
-      <section class="banner-slider-full">
-        <div class="hero-carousel">
-          <div class="carousel-track">
-            <img
-              src="./assets/images/anh/banner_part1.png"
-              class="carousel-slide"
-              alt="Banner 1"
-            />
-            <img
-              src="./assets/images/anh/banner_part2.png"
-              class="carousel-slide"
-              alt="Banner 2"
-            />
-            <img
-              src="./assets/images/anh/banner_part3.png"
-              class="carousel-slide"
-              alt="Banner 3"
-            />
-          </div>
-          <button class="carousel-nav prev">
-            <i class="fa-solid fa-angle-left"></i>
-          </button>
-          <button class="carousel-nav next">
-            <i class="fa-solid fa-angle-right"></i>
-          </button>
-          <div class="carousel-dots">
-            <span class="dot active"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
+      <!-- ===== HERO: Sidebar + Banner ===== -->
+      <section class="hero-layout">
+        <!-- Left: Category sidebar -->
+        <aside class="hero-sidebar" id="hero-sidebar">
+          <a href="products.html?q=Cá Cảnh"><i class="fa-solid fa-fish"></i> Cá Cảnh</a>
+          <a href="products.html?q=Tép Cảnh"><i class="fa-solid fa-shrimp"></i> Tép Cảnh</a>
+          <a href="products.html?q=Cây Thủy Sinh"><i class="fa-solid fa-seedling"></i> Cây Thủy Sinh</a>
+          <a href="products.html?q=Đèn Thủy Sinh"><i class="fa-solid fa-lightbulb"></i> Đèn Thủy Sinh</a>
+          <a href="products.html?q=Máy Lọc"><i class="fa-solid fa-filter"></i> Máy Lọc, Vật Liệu Lọc</a>
+          <a href="products.html?q=Phân Nền"><i class="fa-solid fa-layer-group"></i> Phân Nền, Cốt Nền</a>
+          <a href="products.html?q=Thức Ăn"><i class="fa-solid fa-bowl-food"></i> Thức Ăn Cho Cá/Tép</a>
+          <a href="products.html?q=Thuốc"><i class="fa-solid fa-pills"></i> Thuốc & Chế Phẩm</a>
+          <a href="products.html?q=Phụ Kiện"><i class="fa-solid fa-box-open"></i> Phụ Kiện Khác</a>
+          <a href="services.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Dịch Vụ Setup Bể</a>
+        </aside>
+
+        <!-- Right: Banner carousel -->
+        <div class="hero-carousel-wrap">
+          <div class="hero-carousel" id="main-carousel">
+            <div class="carousel-track" id="carousel-track">
+              <img src="./assets/images/anh/banner_part1.png" class="carousel-slide" alt="Banner thủy sinh 1" />
+              <img src="./assets/images/anh/banner_part2.png" class="carousel-slide" alt="Banner thủy sinh 2" />
+              <img src="./assets/images/anh/banner_part3.png" class="carousel-slide" alt="Banner thủy sinh 3" />
+            </div>
+            <button class="carousel-nav prev" id="carousel-prev" aria-label="Ảnh trước">
+              <i class="fa-solid fa-angle-left"></i>
+            </button>
+            <button class="carousel-nav next" id="carousel-next" aria-label="Ảnh sau">
+              <i class="fa-solid fa-angle-right"></i>
+            </button>
+            <div class="carousel-dots" id="carousel-dots">
+              <span class="dot active"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- Features -->
-      <section class="features-section">
-        <div class="container features-grid">
-          <div class="feature-item">
-            <div class="feature-icon icon-blue">
-              <i class="fa-solid fa-fish"></i>
-            </div>
-            <h3>Sinh vật đa dạng</h3>
-            <p>Cá, tép chất lượng cao</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon icon-cyan">
-              <i class="fa-solid fa-droplet"></i>
-            </div>
-            <h3>Cây thủy sinh</h3>
-            <p>Đa dạng loại cây đẹp</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon icon-green">
-              <i class="fa-solid fa-wrench"></i>
-            </div>
-            <h3>Thiết bị đầy đủ</h3>
-            <p>Lọc, đèn, CO2, phụ kiện</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon icon-purple">
-              <i class="fa-solid fa-book-open"></i>
-            </div>
-            <h3>Tư vấn miễn phí</h3>
-            <p>Hỗ trợ setup và chăm sóc</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Danh mục nổi bật -->
-      <section class="categories-section container">
-        <h2 class="section-title">Danh mục nổi bật</h2>
-        <div class="category-tabs">
-          <a
-            href="products.html?q=Cá Cảnh"
-            class="cat-tab"
-            style="text-decoration: none; color: inherit; display: block"
-            >Cá Cảnh</a
-          >
-          <a
-            href="products.html?q=Tép Cảnh"
-            class="cat-tab"
-            style="text-decoration: none; color: inherit; display: block"
-            >Tép Cảnh</a
-          >
-          <a
-            href="products.html?q=Cây Thủy Sinh"
-            class="cat-tab"
-            style="text-decoration: none; color: inherit; display: block"
-            >Cây Thủy Sinh</a
-          >
-          <a
-            href="products.html?q=Thiết Bị"
-            class="cat-tab"
-            style="text-decoration: none; color: inherit; display: block"
-            >Thiết Bị Lọc</a
-          >
-          <a
-            href="products.html?q=Nền"
-            class="cat-tab"
-            style="text-decoration: none; color: inherit; display: block"
-            >Đất Nền & Cát</a
-          >
-          <a
-            href="products.html?q=Đèn"
-            class="cat-tab"
-            style="text-decoration: none; color: inherit; display: block"
-            >Đèn Chiếu Sáng</a
-          >
-        </div>
-      </section>
-
-      <!-- Khuyến mãi Hot -->
-      <section class="promo-section">
+      <!-- ===== TRUST BADGES ===== -->
+      <section class="trust-badges">
         <div class="container">
-          <div class="section-header">
-            <h2 class="section-title">🔥 Khuyến mãi hot</h2>
-            <a href="#" class="btn btn-outline">Xem tất cả</a>
-          </div>
-          <div class="product-grid p-grid-2">
-            <!-- Product 1 -->
-            <div class="product-card">
-              <div class="product-badges">
-                <span class="badge badge-sale">-25%</span>
-                <span class="badge badge-highlight">Nổi bật</span>
+          <div class="trust-badges-inner">
+            <div class="trust-item">
+              <div class="trust-icon"><i class="fa-solid fa-truck-fast"></i></div>
+              <div class="trust-text">
+                <strong>Giao hàng tận nơi</strong>
+                <span>Toàn quốc, hỏa tốc nội thành</span>
               </div>
-              <div
-                class="product-image real-image"
-                style="
-                  background-image: url(&quot;./assets/images/anh/c%C3%A1/betta%20half%20moon.webp&quot;);
-                  background-size: cover;
-                  background-position: center;
-                "
-              ></div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+              <div class="trust-text">
+                <strong>Thanh toán tiện lợi</strong>
+                <span>COD, VNPAY, MoMo, chuyển khoản</span>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon"><i class="fa-solid fa-headset"></i></div>
+              <div class="trust-text">
+                <strong>Chăm sóc 24/7</strong>
+                <span>Tư vấn miễn phí mọi lúc</span>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon"><i class="fa-solid fa-shield-halved"></i></div>
+              <div class="trust-text">
+                <strong>Sản phẩm chính hãng</strong>
+                <span>Cam kết chất lượng, đổi trả dễ dàng</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CÁ CẢNH ===== -->
+      <section class="section-block">
+        <div class="container">
+          <div class="section-heading">
+            <h2>🐟 Cá Cảnh</h2>
+            <a href="products.html?q=Cá Cảnh" class="btn-view-all">Xem tất cả <i class="fa-solid fa-angle-right"></i></a>
+          </div>
+          <div class="product-grid" id="fish-grid">
+            <!-- Loaded by script or static -->
+            <div class="product-card">
+              <div class="product-badges"><span class="badge badge-sale">-25%</span></div>
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/c%C3%A1/betta%20half%20moon.webp')"></div>
               <div class="product-info">
                 <div class="product-cat">Cá Cảnh</div>
-                <h3 class="product-name">
-                  Cá Betta Halfmoon Blue
-                  <span
-                    style="
-                      display: block;
-                      font-size: 12px;
-                      color: #ef4444;
-                      margin-top: 3px;
-                    "
-                    >(Combo 10 con)</span
-                  >
-                </h3>
+                <h3 class="product-name">Cá Betta Halfmoon Blue</h3>
                 <div class="product-price">
-                  <span class="price-current">150.000đ</span>
-                  <span class="price-old">200.000đ</span>
+                  <span class="price-current">80.000đ</span>
+                  <span class="price-old">110.000đ</span>
                 </div>
-                <button class="btn btn-cart-black btn-add-cart">
-                  <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Cá Betta Halfmoon Blue" data-price="80000" data-img="./assets/images/anh/cá/betta half moon.webp">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
                 </button>
               </div>
             </div>
-            <!-- Product 2 -->
             <div class="product-card">
-              <div class="product-badges">
-                <span class="badge badge-sale">-20%</span>
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/c%C3%A1/neon%20xanh.webp')"></div>
+              <div class="product-info">
+                <div class="product-cat">Cá Cảnh</div>
+                <h3 class="product-name">Cá Neon Tetra</h3>
+                <div class="product-price">
+                  <span class="price-current">15.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Cá Neon Tetra" data-price="15000" data-img="./assets/images/anh/cá/neon xanh.webp">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
               </div>
-              <div
-                class="product-image real-image"
-                style="
-                  background-image: url(&quot;./assets/images/anh/t%C3%A9p/pure%20red%20line.webp&quot;);
-                  background-size: cover;
-                  background-position: center;
-                "
-              ></div>
+            </div>
+            <div class="product-card">
+              <div class="product-badges"><span class="badge badge-highlight">Hot</span></div>
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/c%C3%A1/ca%20vang.webp')"></div>
+              <div class="product-info">
+                <div class="product-cat">Cá Cảnh</div>
+                <h3 class="product-name">Cá Vàng Oranda</h3>
+                <div class="product-price">
+                  <span class="price-current">45.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Cá Vàng Oranda" data-price="45000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/c%C3%A1/sam%20vu.webp')"></div>
+              <div class="product-info">
+                <div class="product-cat">Cá Cảnh</div>
+                <h3 class="product-name">Cá Sam Vũ</h3>
+                <div class="product-price">
+                  <span class="price-current">35.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Cá Sam Vũ" data-price="35000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-badges"><span class="badge badge-sale">-20%</span></div>
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/c%C3%A1/betta%20half%20moon.webp')"></div>
+              <div class="product-info">
+                <div class="product-cat">Cá Cảnh</div>
+                <h3 class="product-name">Cá Betta Plakat Đuôi Ngắn</h3>
+                <div class="product-price">
+                  <span class="price-current">60.000đ</span>
+                  <span class="price-old">75.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Cá Betta Plakat" data-price="60000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== TÉP CẢNH ===== -->
+      <section class="section-block">
+        <div class="container">
+          <div class="section-heading">
+            <h2>🦐 Tép Cảnh</h2>
+            <a href="products.html?q=Tép Cảnh" class="btn-view-all">Xem tất cả <i class="fa-solid fa-angle-right"></i></a>
+          </div>
+          <div class="product-grid">
+            <div class="product-card">
+              <div class="product-badges"><span class="badge badge-sale">-20%</span></div>
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/t%C3%A9p/pure%20red%20line.webp')"></div>
               <div class="product-info">
                 <div class="product-cat">Tép Cảnh</div>
-                <h3 class="product-name">
-                  Tép Ong Đen Taiwan Bee
-                  <span
-                    style="
-                      display: block;
-                      font-size: 12px;
-                      color: #ef4444;
-                      margin-top: 3px;
-                    "
-                    >(Combo 10 con)</span
-                  >
-                </h3>
+                <h3 class="product-name">Tép Ong Đen Taiwan Bee</h3>
                 <div class="product-price">
                   <span class="price-current">200.000đ</span>
                   <span class="price-old">250.000đ</span>
                 </div>
-                <button class="btn btn-cart-black btn-add-cart">
-                  <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Tép Ong Đen Taiwan Bee" data-price="200000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/t%C3%A9p/fire%20red.webp')"></div>
+              <div class="product-info">
+                <div class="product-cat">Tép Cảnh</div>
+                <h3 class="product-name">Tép Sakura Fire Red</h3>
+                <div class="product-price">
+                  <span class="price-current">20.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Tép Sakura Fire Red" data-price="20000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-badges"><span class="badge badge-highlight">Bán chạy</span></div>
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/t%C3%A9p/blue%20velvet.webp')"></div>
+              <div class="product-info">
+                <div class="product-cat">Tép Cảnh</div>
+                <h3 class="product-name">Tép Blue Velvet</h3>
+                <div class="product-price">
+                  <span class="price-current">25.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Tép Blue Velvet" data-price="25000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/t%C3%A9p/fire%20red.webp')"></div>
+              <div class="product-info">
+                <div class="product-cat">Tép Cảnh</div>
+                <h3 class="product-name">Tép Snowball</h3>
+                <div class="product-price">
+                  <span class="price-current">30.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Tép Snowball" data-price="30000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-badges"><span class="badge badge-sale">-15%</span></div>
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/t%C3%A9p/pure%20red%20line.webp')"></div>
+              <div class="product-info">
+                <div class="product-cat">Tép Cảnh</div>
+                <h3 class="product-name">Tép Crystal Red (CRS)</h3>
+                <div class="product-price">
+                  <span class="price-current">50.000đ</span>
+                  <span class="price-old">60.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Tép Crystal Red" data-price="50000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
                 </button>
               </div>
             </div>
@@ -254,260 +340,380 @@
         </div>
       </section>
 
-      <!-- Sản phẩm nổi bật -->
-      <section class="featured-products container">
-        <div class="section-header">
-          <h2 class="section-title">Sản phẩm nổi bật</h2>
-          <a href="#" class="btn btn-outline">Xem tất cả</a>
-        </div>
-
-        <div class="product-grid">
-          <!-- Product 1 -->
-          <div class="product-card">
-            <div class="product-badges">
-              <span class="badge badge-sale">-25%</span>
-              <span class="badge badge-highlight">Nổi bật</span>
-            </div>
-            <div
-              class="product-image real-image"
-              style="
-                background-image: url(&quot;./assets/images/anh/c%C3%A1/betta%20half%20moon.webp&quot;);
-                background-size: cover;
-                background-position: center;
-              "
-            ></div>
-            <div class="product-info">
-              <div class="product-cat">Cá Cảnh</div>
-              <h3 class="product-name">Cá Betta Halfmoon Blue</h3>
-              <div class="product-price">
-                <span class="price-current">80.000đ</span>
-                <span class="price-old">120.000đ</span>
-              </div>
-              <button class="btn btn-cart-black btn-add-cart">
-                <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
-              </button>
-            </div>
+      <!-- ===== CÂY THỦY SINH ===== -->
+      <section class="section-block">
+        <div class="container">
+          <div class="section-heading">
+            <h2>🌿 Cây Thủy Sinh</h2>
+            <a href="products.html?q=Cây Thủy Sinh" class="btn-view-all">Xem tất cả <i class="fa-solid fa-angle-right"></i></a>
           </div>
-
-          <!-- Product 2 -->
-          <div class="product-card">
-            <div class="product-badges">
-              <span class="badge badge-highlight">Nổi bật</span>
-            </div>
-            <div
-              class="product-image real-image"
-              style="
-                background-image: url(&quot;./assets/images/anh/c%C3%A1/neon%20xanh.webp&quot;);
-                background-size: cover;
-                background-position: center;
-              "
-            >
-              <span class="status-badge">Chỉ còn 8</span>
-            </div>
-            <div class="product-info">
-              <div class="product-cat">Cá Cảnh</div>
-              <h3 class="product-name">Cá Neon Tetra</h3>
-              <div class="product-price">
-                <span class="price-current">15.000đ</span>
+          <div class="product-grid">
+            <div class="product-card">
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/c%C3%A2y%20th%E1%BB%A7y%20sinh/r%C3%AAu%20mini%20fiss.png')"></div>
+              <div class="product-info">
+                <div class="product-cat">Cây Thủy Sinh</div>
+                <h3 class="product-name">Rêu Mini Fiss</h3>
+                <div class="product-price">
+                  <span class="price-current">50.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Rêu Mini Fiss" data-price="50000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
               </div>
-              <button class="btn btn-cart-black btn-add-cart">
-                <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
-              </button>
             </div>
-          </div>
-
-          <!-- Product 3 -->
-          <div class="product-card">
-            <div class="product-badges">
-              <span class="badge badge-highlight">Nổi bật</span>
-            </div>
-            <div
-              class="product-image real-image"
-              style="
-                background-image: url(&quot;./assets/images/anh/t%C3%A9p/fire%20red.webp&quot;);
-                background-size: cover;
-                background-position: center;
-              "
-            >
-              <span class="status-badge">Chỉ còn 6</span>
-            </div>
-            <div class="product-info">
-              <div class="product-cat">Tép Cảnh</div>
-              <h3 class="product-name">Tép Sakura Fire Red</h3>
-              <div class="product-price">
-                <span class="price-current">20.000đ</span>
+            <div class="product-card">
+              <div class="product-badges"><span class="badge badge-highlight">Phổ biến</span></div>
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/c%C3%A2y%20th%E1%BB%A7y%20sinh/rao%20java.webp')"></div>
+              <div class="product-info">
+                <div class="product-cat">Cây Thủy Sinh</div>
+                <h3 class="product-name">Rêu Java Fern</h3>
+                <div class="product-price">
+                  <span class="price-current">40.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Rêu Java Fern" data-price="40000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
               </div>
-              <button class="btn btn-cart-black btn-add-cart">
-                <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
-              </button>
             </div>
-          </div>
-
-          <!-- Product 4 -->
-          <div class="product-card">
-            <div class="product-badges">
-              <span class="badge badge-highlight">Nổi bật</span>
-            </div>
-            <div
-              class="product-image real-image"
-              style="
-                background-image: url(&quot;./assets/images/anh/c%C3%A2y%20th%E1%BB%A7y%20sinh/r%C3%AAu%20mini%20fiss.png&quot;);
-                background-size: cover;
-                background-position: center;
-              "
-            ></div>
-            <div class="product-info">
-              <div class="product-cat">Cây Thủy Sinh</div>
-              <h3 class="product-name">Rêu Mini Fiss</h3>
-              <div class="product-price">
-                <span class="price-current">50.000đ</span>
+            <div class="product-card">
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/c%C3%A2y%20th%E1%BB%A7y%20sinh/rao%20java.webp')"></div>
+              <div class="product-info">
+                <div class="product-cat">Cây Thủy Sinh</div>
+                <h3 class="product-name">Cỏ Ống Nhật</h3>
+                <div class="product-price">
+                  <span class="price-current">30.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Cỏ Ống Nhật" data-price="30000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
               </div>
-              <button class="btn btn-cart-black btn-add-cart">
-                <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
-              </button>
+            </div>
+            <div class="product-card">
+              <div class="product-badges"><span class="badge badge-sale">-10%</span></div>
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/c%C3%A2y%20th%E1%BB%A7y%20sinh/r%C3%AAu%20mini%20fiss.png')"></div>
+              <div class="product-info">
+                <div class="product-cat">Cây Thủy Sinh</div>
+                <h3 class="product-name">Cây Thủy Thảo Nam</h3>
+                <div class="product-price">
+                  <span class="price-current">27.000đ</span>
+                  <span class="price-old">30.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Cây Thủy Thảo Nam" data-price="27000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/c%C3%A2y%20th%E1%BB%A7y%20sinh/rao%20java.webp')"></div>
+              <div class="product-info">
+                <div class="product-cat">Cây Thủy Sinh</div>
+                <h3 class="product-name">Bucephalandra Thái</h3>
+                <div class="product-price">
+                  <span class="price-current">65.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Bucephalandra Thái" data-price="65000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Dịch vụ Setup -->
+      <!-- ===== ĐÈN & MÁY LỌC ===== -->
+      <section class="section-block">
+        <div class="container">
+          <div class="section-heading">
+            <h2>💡 Đèn &amp; Thiết Bị</h2>
+            <a href="products.html?q=Đèn" class="btn-view-all">Xem tất cả <i class="fa-solid fa-angle-right"></i></a>
+          </div>
+          <div class="product-grid">
+            <div class="product-card">
+              <div class="product-badges"><span class="badge badge-sale">-30%</span></div>
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/%C4%91%C3%A8n%20th%E1%BB%A7y%20sinh/den_led.jpg')"></div>
+              <div class="product-info">
+                <div class="product-cat">Đèn Thủy Sinh</div>
+                <h3 class="product-name">Đèn LED Chihiros WRGB Slim60</h3>
+                <div class="product-price">
+                  <span class="price-current">1.850.000đ</span>
+                  <span class="price-old">2.650.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Đèn LED Chihiros WRGB Slim60" data-price="1850000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/m%C3%A1y%20l%E1%BB%8Dc%20v%C3%A0%20v%E1%BA%ADt%20li%E1%BB%87u%20l%E1%BB%8Dc/loc_teo.jpg')"></div>
+              <div class="product-info">
+                <div class="product-cat">Máy Lọc</div>
+                <h3 class="product-name">Máy Lọc Treo Sunsun XBL</h3>
+                <div class="product-price">
+                  <span class="price-current">250.000đ</span>
+                  <span class="price-old">270.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Máy Lọc Treo Sunsun XBL" data-price="250000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/%C4%91%C3%A8n%20th%E1%BB%A7y%20sinh/den_led.jpg')"></div>
+              <div class="product-info">
+                <div class="product-cat">Đèn Thủy Sinh</div>
+                <h3 class="product-name">Đèn LED ONF Flat Nano</h3>
+                <div class="product-price">
+                  <span class="price-current">2.200.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Đèn LED ONF Flat Nano" data-price="2200000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-badges"><span class="badge badge-highlight">Mới</span></div>
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/m%C3%A1y%20l%E1%BB%8Dc%20v%C3%A0%20v%E1%BA%ADt%20li%E1%BB%87u%20l%E1%BB%8Dc/loc_teo.jpg')"></div>
+              <div class="product-info">
+                <div class="product-cat">Máy Lọc</div>
+                <h3 class="product-name">Máy Lọc Thùng HaiYang Tích Hợp</h3>
+                <div class="product-price">
+                  <span class="price-current">1.500.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Máy Lọc Thùng HaiYang" data-price="1500000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image real-image" style="background-image:url('./assets/images/anh/ph%C3%A2n%20n%E1%BB%81n%20%2C%20c%E1%BB%91t%20n%E1%BB%81n%20%2C%20c%C3%A1t%20tr%E1%BA%A3i%20n%E1%BB%81n/phan_nen.jpg')"></div>
+              <div class="product-info">
+                <div class="product-cat">Phân Nền</div>
+                <h3 class="product-name">Phân Nền ADA Aqua Soil Amazonia</h3>
+                <div class="product-price">
+                  <span class="price-current">380.000đ</span>
+                </div>
+                <button class="btn-add-cart-sm btn-add-cart" data-name="Phân Nền ADA Aqua Soil" data-price="380000">
+                  <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== TIN NỔI BẬT ===== -->
+      <section class="section-block">
+        <div class="container">
+          <div class="section-heading">
+            <h2>📰 Tin Nổi Bật</h2>
+            <a href="blog.html" class="btn-view-all">Xem tất cả <i class="fa-solid fa-angle-right"></i></a>
+          </div>
+          <div class="blog-grid">
+            <a href="blog.html" class="blog-card">
+              <img src="./assets/images/anh/banner_part1.png" alt="Cách điều chỉnh pH" class="blog-card-img" />
+              <div class="blog-card-body">
+                <h3>Cách Điều Chỉnh pH Cho Hồ Thủy Sinh Hiệu Quả</h3>
+                <p>Độ pH là một khái niệm mà chắc hẳn ai cũng đã từng một lần nghe qua, đặc biệt đối với những người chơi thủy sinh...</p>
+              </div>
+            </a>
+            <a href="blog.html" class="blog-card">
+              <img src="./assets/images/anh/banner_part2.png" alt="Bệnh rêu thủy sinh" class="blog-card-img" />
+              <div class="blog-card-body">
+                <h3>Bí Quyết Chữa Bệnh Rêu Thủy Sinh Bị Rữa</h3>
+                <p>Bệnh rữa, thối nhũn thân lá là một bệnh phổ biến thường xuyên hay gặp ở cây rêu và cũng là một trong những...</p>
+              </div>
+            </a>
+            <a href="blog.html" class="blog-card">
+              <img src="./assets/images/anh/banner_part3.png" alt="Top 5 loài cá cảnh" class="blog-card-img" />
+              <div class="blog-card-body">
+                <h3>Top 5 Loài Cá Cảnh Bơi Theo Đàn Cho Hồ Thủy Sinh</h3>
+                <p>Các loài cá cảnh bơi theo đàn làm hồ thủy sinh của bạn trở nên cực kỳ sinh động, chúng tạo cảm giác bể cá luôn đông vui...</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SETUP SERVICE CTA ===== -->
       <section class="setup-service">
         <div class="container text-center">
-          <h2>Dịch vụ Setup Bể Thủy Sinh</h2>
-          <p>
-            Đội ngũ chuyên nghiệp hơn 10 năm kinh nghiệm, thiết kế và setup bể
-            thủy sinh theo phong cách của bạn. Tư vấn miễn phí!
-          </p>
-          <a href="#" class="btn btn-white"
-            >Đặt lịch tư vấn ngay <i class="fa-solid fa-arrow-right"></i
-          ></a>
+          <h2>🏆 Dịch Vụ Setup Bể Thủy Sinh</h2>
+          <p>Đội ngũ chuyên nghiệp hơn 10 năm kinh nghiệm, thiết kế và setup bể thủy sinh theo phong cách của bạn. Tư vấn miễn phí!</p>
+          <a href="services.html" class="btn-white">Đặt lịch tư vấn ngay <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </section>
     </main>
 
+    <!-- ===== FOOTER ===== -->
     <footer class="site-footer">
       <div class="container footer-grid">
-        <div class="footer-col brand-col">
+        <div class="footer-col">
           <div class="footer-logo">
-            <i class="fa-solid fa-fish"></i> Minh Aquarium
+            <img src="./assets/images/anh/logo_transparent.png" alt="Minh Aquarium" style="height:36px;width:auto;" />
+            Minh Aquarium
           </div>
-          <p>
-            Chuyên cung cấp cá cảnh, tép cảnh, cây thủy sinh và thiết bị chăm
-            sóc bể cá. Dịch vụ setup bể chuyên nghiệp, tận tâm.
-          </p>
-          <div class="social-links">
-            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-youtube"></i></a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h3>Danh mục</h3>
-          <ul>
-            <li><a href="#">Cá cảnh</a></li>
-            <li><a href="#">Tép cảnh</a></li>
-            <li><a href="#">Cây thủy sinh</a></li>
-            <li><a href="#">Thiết bị lọc</a></li>
-            <li><a href="#">Đèn chiếu sáng</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h3>Hỗ trợ</h3>
-          <ul>
-            <li><a href="#">Kiến thức thủy sinh</a></li>
-            <li><a href="#">Dịch vụ setup bể</a></li>
-            <li><a href="#">Chính sách vận chuyển</a></li>
-            <li><a href="#">Chính sách bảo hành</a></li>
-            <li><a href="#">Hướng dẫn chăm sóc</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h3>Liên hệ</h3>
-          <ul class="contact-list">
-            <li>
-              <i class="fa-solid fa-location-dot"></i> La khê - Hà Đông - Hà Nội
-            </li>
-            <li><i class="fa-solid fa-phone"></i> 0123456789</li>
+          <p>Chuyên cung cấp cá cảnh, tép cảnh, cây thủy sinh và thiết bị chăm sóc bể cá. Dịch vụ setup bể chuyên nghiệp, tận tâm.</p>
+          <ul class="footer-contact-list">
+            <li><i class="fa-solid fa-location-dot"></i> La Khê - Hà Đông - Hà Nội</li>
+            <li><i class="fa-solid fa-phone"></i> 0123 456 789</li>
             <li><i class="fa-solid fa-envelope"></i> minhaquarium@gmail.com</li>
           </ul>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="Youtube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#" aria-label="Tiktok"><i class="fa-brands fa-tiktok"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>Hướng Dẫn</h3>
+          <ul>
+            <li><a href="#">Hướng dẫn mua hàng</a></li>
+            <li><a href="#">Hướng dẫn thanh toán</a></li>
+            <li><a href="#">Hướng dẫn giao nhận</a></li>
+            <li><a href="#">Điều khoản dịch vụ</a></li>
+            <li><a href="#">Kiểm tra đơn hàng</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Chính Sách</h3>
+          <ul>
+            <li><a href="#">Chính sách & Quy định chung</a></li>
+            <li><a href="#">Chính sách bảo mật</a></li>
+            <li><a href="#">Chính sách vận chuyển</a></li>
+            <li><a href="#">Chính sách đổi/trả hàng</a></li>
+            <li><a href="#">Quy định hình thức thanh toán</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Chấp Nhận Thanh Toán</h3>
+          <div class="footer-payment-icons">
+            <span>COD</span>
+            <span>VNPAY</span>
+            <span>MoMo</span>
+            <span>ATM</span>
+            <span>QR</span>
+          </div>
+          <div style="margin-top:20px;">
+            <h3>Danh Mục</h3>
+            <ul>
+              <li><a href="products.html?q=Cá Cảnh">Cá Cảnh</a></li>
+              <li><a href="products.html?q=Tép Cảnh">Tép Cảnh</a></li>
+              <li><a href="products.html?q=Cây Thủy Sinh">Cây Thủy Sinh</a></li>
+              <li><a href="products.html?q=Đèn">Đèn Thủy Sinh</a></li>
+              <li><a href="products.html?q=Máy Lọc">Máy Lọc</a></li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="footer-bottom">
         <div class="container">
-          <p>&copy; 2026 Minh Aquarium. All rights reserved.</p>
+          <p>&copy; 2026 Minh Aquarium – La Khê, Hà Đông, Hà Nội. All rights reserved.</p>
         </div>
       </div>
     </footer>
-    <script type="module" src="./assets/js/script.js?v=15"></script>
+
+    <!-- ===== SOCIAL PROOF POPUP ===== -->
+    <div class="social-proof-popup" id="social-proof-popup">
+      <div class="sp-avatar"><i class="fa-solid fa-bag-shopping"></i></div>
+      <div class="sp-text">
+        <strong id="sp-message">Khách tại Hà Nội vừa đặt Cá Betta Halfmoon</strong>
+        <small id="sp-time">2 phút trước</small>
+      </div>
+      <span class="sp-close" id="sp-close" title="Đóng">×</span>
+    </div>
+
+    <!-- ===== FLOATER BUTTONS ===== -->
+    <div class="chat-floaters">
+      <a href="https://zalo.me/0123456789" target="_blank" class="floater-btn floater-zalo" title="Chat Zalo">
+        <i class="fa-brands fa-square-phone-flip"></i>
+      </a>
+      <a href="https://m.me/" target="_blank" class="floater-btn floater-messenger" title="Messenger">
+        <i class="fa-brands fa-facebook-messenger"></i>
+      </a>
+      <button class="floater-scroll-top" id="scroll-top-btn" title="Lên đầu trang" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class="fa-solid fa-angle-up"></i>
+      </button>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script type="module" src="./assets/js/script.js?v=20"></script>
     <script>
-      // Đảm bảo chạy 100% bằng script trực tiếp nhúng nội tuyến để tránh lỗi bộ nhớ đệm
-      document.addEventListener("DOMContentLoaded", function () {
-        const track = document.querySelector(".carousel-track");
-        const slides = document.querySelectorAll(".carousel-slide");
-        const nextBtn = document.querySelector(".carousel-nav.next");
-        const prevBtn = document.querySelector(".carousel-nav.prev");
-        const dots = document.querySelectorAll(".carousel-dots .dot");
-
-        if (!track || slides.length === 0) return;
-
-        let currentIndex = 0;
-        let timer;
-
-        function goToSlide(index) {
-          track.style.transform = `translateX(-${index * (100 / slides.length)}%)`;
-          dots.forEach((d) => d.classList.remove("active"));
-          if (dots[index]) dots[index].classList.add("active");
-          currentIndex = index;
+      // ===== CAROUSEL =====
+      (function(){
+        const track = document.getElementById('carousel-track');
+        const slides = track ? track.querySelectorAll('.carousel-slide') : [];
+        const nextBtn = document.getElementById('carousel-next');
+        const prevBtn = document.getElementById('carousel-prev');
+        const dots = document.querySelectorAll('#carousel-dots .dot');
+        if (!track || !slides.length) return;
+        let idx = 0, timer;
+        function go(i){
+          idx = (i + slides.length) % slides.length;
+          track.style.transform = `translateX(-${idx * (100/slides.length)}%)`;
+          dots.forEach((d,j) => d.classList.toggle('active', j===idx));
         }
-
-        function nextSlide() {
-          let next = currentIndex + 1;
-          if (next >= slides.length) next = 0;
-          goToSlide(next);
-        }
-
-        function prevSlide() {
-          let prev = currentIndex - 1;
-          if (prev < 0) prev = slides.length - 1;
-          goToSlide(prev);
-        }
-
-        function play() {
-          clearInterval(timer);
-          timer = setInterval(nextSlide, 5000); // 5 seconds
-        }
-
-        if (nextBtn) {
-          nextBtn.addEventListener("click", function () {
-            nextSlide();
-            play();
-          });
-        }
-
-        if (prevBtn) {
-          prevBtn.addEventListener("click", function () {
-            prevSlide();
-            play();
-          });
-        }
-
-        dots.forEach((dot, i) => {
-          dot.addEventListener("click", function () {
-            goToSlide(i);
-            play();
-          });
-        });
-
-        // Initialize
+        function play(){ clearInterval(timer); timer = setInterval(()=>go(idx+1), 5000); }
+        nextBtn && nextBtn.addEventListener('click', ()=>{ go(idx+1); play(); });
+        prevBtn && prevBtn.addEventListener('click', ()=>{ go(idx-1); play(); });
+        dots.forEach((d,i) => d.addEventListener('click', ()=>{ go(i); play(); }));
         play();
-      });
+      })();
+
+      // ===== CATEGORY DROPDOWN =====
+      (function(){
+        const toggle = document.getElementById('cat-menu-toggle');
+        const dropdown = document.getElementById('cat-dropdown');
+        if (!toggle || !dropdown) return;
+        toggle.addEventListener('click', function(e){
+          e.stopPropagation();
+          dropdown.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', dropdown.classList.contains('open'));
+        });
+        document.addEventListener('click', function(){
+          dropdown.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+        dropdown.addEventListener('click', e => e.stopPropagation());
+      })();
+
+      // ===== SCROLL-TO-TOP =====
+      (function(){
+        const btn = document.getElementById('scroll-top-btn');
+        if (!btn) return;
+        window.addEventListener('scroll', ()=> btn.classList.toggle('visible', window.scrollY > 300));
+      })();
+
+      // ===== SOCIAL PROOF POPUP =====
+      (function(){
+        const popup = document.getElementById('social-proof-popup');
+        const closeBtn = document.getElementById('sp-close');
+        const msg = document.getElementById('sp-message');
+        const time = document.getElementById('sp-time');
+        if (!popup) return;
+        const orders = [
+          {name:'Cá Betta Halfmoon Xanh', city:'Hà Nội'},
+          {name:'Tép Ong Đen Taiwan Bee', city:'Hà Đông'},
+          {name:'Rêu Mini Fiss', city:'Đống Đa'},
+          {name:'Đèn LED Chihiros WRGB', city:'Cầu Giấy'},
+          {name:'Tép Sakura Fire Red', city:'Hoàng Mai'},
+          {name:'Phân Nền ADA Aqua Soil', city:'Long Biên'},
+        ];
+        const times = ['vừa xong','1 phút trước','2 phút trước','5 phút trước','7 phút trước','10 phút trước'];
+        function showNext(){
+          const o = orders[Math.floor(Math.random()*orders.length)];
+          const t = times[Math.floor(Math.random()*times.length)];
+          msg.textContent = `Khách tại ${o.city} vừa đặt ${o.name}`;
+          time.textContent = t;
+          popup.classList.remove('hidden');
+          setTimeout(()=>popup.classList.add('hidden'), 5000);
+        }
+        setTimeout(()=>{ showNext(); setInterval(showNext, 18000); }, 6000);
+        closeBtn && closeBtn.addEventListener('click', ()=>popup.classList.add('hidden'));
+      })();
     </script>
   </body>
 </html>
-
-
-
-

@@ -276,8 +276,6 @@ const NORTH_PROVINCES = [
   "thai binh",
   "ninh binh",
   "ha nam",
-  "nam dinh",
-  "quang ninh",
 ];
 
 const CENTRAL_PROVINCES = [
@@ -390,10 +388,7 @@ function isExpressAvailable(distanceKm) {
   return km > 0 && km <= 20;
 }
 
-if (
-  window.location.pathname.includes("cart.html") ||
-  document.querySelector(".empty-cart-container")
-) {
+if (window.location.pathname.includes("cart.html")) {
   const mainContainer = document.querySelector(".page-container");
 
   // Add global style for inputs if not exists
@@ -612,8 +607,8 @@ if (
 
   // Global Functions for inline HTML handlers
   window.updateQuantity = function (index, val) {
-    if (val < 1) val = 1;
-    cart[index].quantity = parseInt(val);
+    const numVal = parseInt(val, 10) || 1;
+    cart[index].quantity = numVal < 1 ? 1 : numVal;
     localStorage.setItem("minhaq_cart", JSON.stringify(cart));
     updateCartBadge();
     renderCartPage();
@@ -713,8 +708,13 @@ function initChatbotWidget() {
     const style = document.createElement("style");
     style.id = "ma-chat-widget-style";
     style.innerHTML = `
-      .ma-chat-root { position: fixed; right: 18px; bottom: 18px; z-index: 100000; font-family: 'Outfit', sans-serif; }
-      .ma-chat-toggle { width: 58px; height: 58px; border-radius: 50%; border: none; background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; box-shadow: 0 12px 30px rgba(2, 132, 199, 0.35); cursor: pointer; font-size: 22px; }
+      .ma-chat-root { position: fixed; right: 18px; bottom: 18px; z-index: 100000; font-family: 'Outfit', Arial, sans-serif; }
+      .ma-chat-toggle { min-width: 132px; height: 56px; border-radius: 999px; border: none; background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; box-shadow: 0 12px 30px rgba(2, 132, 199, 0.35); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 0 16px; }
+      .ma-chat-toggle:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(2, 132, 199, 0.42); }
+      .ma-chat-toggle-icon { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,0.18); display: inline-flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; line-height: 1; }
+      .ma-chat-toggle-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.05; }
+      .ma-chat-toggle-text strong { font-size: 14px; font-weight: 800; letter-spacing: 0; }
+      .ma-chat-toggle-text span { font-size: 11px; opacity: 0.92; margin-top: 3px; }
       .ma-chat-panel { position: absolute; right: 0; bottom: 72px; width: min(380px, calc(100vw - 24px)); height: 520px; background: #fff; border-radius: 16px; box-shadow: 0 20px 40px rgba(15, 23, 42, 0.22); border: 1px solid #e2e8f0; display: none; overflow: hidden; }
       .ma-chat-panel.open { display: flex; flex-direction: column; }
       .ma-chat-header { padding: 14px 16px; color: #fff; background: linear-gradient(135deg, #0ea5e9, #0369a1); display: flex; justify-content: space-between; align-items: center; }
@@ -725,6 +725,15 @@ function initChatbotWidget() {
       .ma-chat-message { max-width: 86%; font-size: 14px; line-height: 1.45; padding: 10px 12px; border-radius: 12px; white-space: pre-wrap; word-break: break-word; }
       .ma-chat-message.bot { align-self: flex-start; background: #fff; border: 1px solid #e2e8f0; color: #0f172a; }
       .ma-chat-message.user { align-self: flex-end; background: #0ea5e9; color: #fff; }
+      .ma-chat-products-block { display: grid; gap: 8px; width: 100%; }
+      .ma-chat-product-card { display: grid; grid-template-columns: 56px 1fr; gap: 10px; align-items: center; padding: 8px; background: #fff; border: 1px solid #dbeafe; border-radius: 12px; color: #0f172a; text-decoration: none; }
+      .ma-chat-product-img { width: 56px; height: 56px; border-radius: 9px; background: #e0f2fe; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; color: #0284c7; font-weight: 800; }
+      .ma-chat-product-name { font-size: 13px; font-weight: 800; line-height: 1.25; }
+      .ma-chat-product-meta { font-size: 12px; color: #475569; margin-top: 3px; }
+      .ma-chat-product-price { font-size: 13px; color: #0284c7; font-weight: 800; margin-top: 4px; }
+      .ma-chat-actions-block { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+      .ma-chat-chip { border: 1px solid #bae6fd; background: #fff; color: #0369a1; border-radius: 999px; padding: 8px 10px; font-size: 12px; font-weight: 700; cursor: pointer; text-decoration: none; }
+      .ma-chat-chip:hover { background: #e0f2fe; }
       .ma-chat-handoff { margin: 0 12px 10px; padding: 10px; border-radius: 10px; background: #fff7ed; border: 1px solid #fed7aa; display: none; }
       .ma-chat-handoff p { margin: 0 0 8px; font-size: 13px; color: #9a3412; }
       .ma-chat-handoff .row { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -736,6 +745,7 @@ function initChatbotWidget() {
       .ma-chat-send:disabled, .ma-chat-input:disabled { opacity: 0.65; cursor: not-allowed; }
       @media (max-width: 480px) {
         .ma-chat-root { right: 10px; bottom: 10px; }
+        .ma-chat-toggle { min-width: 116px; height: 52px; padding: 0 12px; }
         .ma-chat-panel { right: -2px; bottom: 68px; width: calc(100vw - 20px); height: 70vh; }
       }
     `;
@@ -747,7 +757,11 @@ function initChatbotWidget() {
   root.className = "ma-chat-root";
   root.innerHTML = `
     <button class="ma-chat-toggle" id="ma-chat-toggle" aria-label="Mở chatbot">
-      <i class="fa-solid fa-comments"></i>
+      <span class="ma-chat-toggle-icon">?</span>
+      <span class="ma-chat-toggle-text">
+        <strong>Chat tư vấn</strong>
+        <span>Minh Aquarium</span>
+      </span>
     </button>
     <div class="ma-chat-panel" id="ma-chat-panel">
       <div class="ma-chat-header">
@@ -789,6 +803,85 @@ function initChatbotWidget() {
     bubble.textContent = text;
     body.appendChild(bubble);
     body.scrollTop = body.scrollHeight;
+  }
+
+  function scrollChatToBottom() {
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function renderProductCards(products = []) {
+    if (!Array.isArray(products) || products.length === 0) return;
+
+    const wrap = document.createElement("div");
+    wrap.className = "ma-chat-products-block";
+    products.slice(0, 4).forEach((product) => {
+      const card = document.createElement("a");
+      card.className = "ma-chat-product-card";
+      card.href = product.productUrl || `products.html?q=${encodeURIComponent(product.name || "")}`;
+
+      const image = document.createElement("div");
+      image.className = "ma-chat-product-img";
+      if (product.imageUrl) {
+        image.style.backgroundImage = `url("${product.imageUrl}")`;
+        image.textContent = "";
+      } else {
+        image.textContent = "SP";
+      }
+
+      const content = document.createElement("div");
+      content.innerHTML = `
+        <div class="ma-chat-product-name"></div>
+        <div class="ma-chat-product-meta"></div>
+        <div class="ma-chat-product-price"></div>
+      `;
+      content.querySelector(".ma-chat-product-name").textContent =
+        product.name || "Sản phẩm";
+      content.querySelector(".ma-chat-product-meta").textContent =
+        `${product.category || "Khác"} · còn ${product.stock ?? 0}`;
+      content.querySelector(".ma-chat-product-price").textContent =
+        product.priceText || "";
+
+      card.appendChild(image);
+      card.appendChild(content);
+      wrap.appendChild(card);
+    });
+
+    body.appendChild(wrap);
+    scrollChatToBottom();
+  }
+
+  function renderActionChips(actions = []) {
+    if (!Array.isArray(actions) || actions.length === 0) return;
+
+    const wrap = document.createElement("div");
+    wrap.className = "ma-chat-actions-block";
+    actions.slice(0, 4).forEach((action) => {
+      const chip = document.createElement(action.url ? "a" : "button");
+      chip.className = "ma-chat-chip";
+      chip.textContent = action.label || action.message || "Gợi ý";
+      if (action.url) {
+        chip.href = action.url;
+      } else {
+        chip.type = "button";
+        chip.addEventListener("click", () => {
+          input.value = action.message || action.label || "";
+          sendMessage();
+        });
+      }
+      wrap.appendChild(chip);
+    });
+
+    body.appendChild(wrap);
+    scrollChatToBottom();
+  }
+
+  function renderStarterChips() {
+    renderActionChips([
+      { label: "Cá dễ nuôi", message: "Gợi ý cá dễ nuôi cho người mới" },
+      { label: "Setup bể 60cm", message: "Tư vấn setup bể thủy sinh 60cm" },
+      { label: "Đèn và lọc", message: "Tư vấn đèn và máy lọc cho bể nhỏ" },
+      { label: "Gặp nhân viên", message: "Tôi muốn gặp nhân viên tư vấn" },
+    ]);
   }
 
   function setSendingState(state) {
@@ -868,6 +961,8 @@ function initChatbotWidget() {
       }
 
       addMessage("assistant", data.answer || "Mình chưa có phản hồi phù hợp.");
+      renderProductCards(data.suggestedProducts);
+      renderActionChips(data.actions);
       renderHandoff(data.handoff);
     } catch (error) {
       addMessage(
@@ -888,6 +983,7 @@ function initChatbotWidget() {
         "assistant",
         "Chào bạn, mình là trợ lý Minh Aquarium. Bạn đang cần tư vấn cá, tép, cây, thiết bị hay setup bể?",
       );
+      renderStarterChips();
     }
     loadHistory();
     input.focus();
@@ -933,7 +1029,11 @@ document.querySelectorAll(".btn-login").forEach((btn) => {
     const action = btn.dataset.authAction || "login";
     if (action === "logout") {
       if (confirm("Bạn muốn đăng xuất?")) {
-        signOut(auth);
+        if (typeof window.logoutCurrentUser === "function") {
+          window.logoutCurrentUser();
+        } else {
+          signOut(auth);
+        }
       }
       return;
     }
@@ -1379,7 +1479,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.head.appendChild(style);
   }
 });
-// ========= Firebase Auth Logic =========
+// ========= Auth Logic =========
+const AUTH_STORAGE_KEY = "minhaq_user";
 const authForm = document.getElementById("auth-form");
 const authToggleLink = document.getElementById("auth-toggle-link");
 const authTitle = document.getElementById("auth-title");
@@ -1389,6 +1490,149 @@ const authToggleText = document.getElementById("auth-toggle-text");
 const authRememberRow = document.getElementById("auth-remember-row");
 
 let isLoginMode = true;
+
+function toStoredFirebaseUser(user) {
+  return user
+    ? {
+        id: user.uid,
+        uid: user.uid,
+        email: user.email,
+        role: "customer",
+        provider: "firebase",
+      }
+    : null;
+}
+
+function storeAuthUser(storedUser) {
+  if (storedUser) {
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(storedUser));
+  } else {
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+  }
+  updateAuthButtons(storedUser);
+}
+
+function cacheAuthUser(user) {
+  storeAuthUser(toStoredFirebaseUser(user));
+}
+
+function updateAuthButtons(user) {
+  const loginBtns = document.querySelectorAll(".btn-login");
+  loginBtns.forEach((btn) => {
+    if (user) {
+      btn.innerHTML = `<i class="fa-solid fa-user"></i> ${user.email.split("@")[0]}`;
+      btn.dataset.authAction = "logout";
+    } else {
+      btn.innerHTML = "Đăng nhập";
+      btn.dataset.authAction = "login";
+    }
+  });
+}
+
+async function syncFirebaseUserWithBackend(firebaseUser) {
+  if (!firebaseUser) return null;
+
+  const idToken = await firebaseUser.getIdToken();
+  const response = await fetch("/api/auth/firebase", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || data.success === false) {
+    throw new Error(data.error || "Không đồng bộ được tài khoản Firebase.");
+  }
+
+  return {
+    ...data.user,
+    uid: firebaseUser.uid,
+    email: firebaseUser.email,
+    provider: "firebase",
+  };
+}
+
+async function cacheFirebaseUser(firebaseUser) {
+  const fallbackUser = toStoredFirebaseUser(firebaseUser);
+  storeAuthUser(fallbackUser);
+
+  try {
+    const syncedUser = await syncFirebaseUserWithBackend(firebaseUser);
+    if (syncedUser) {
+      storeAuthUser(syncedUser);
+      return syncedUser;
+    }
+  } catch (error) {
+    console.warn("Firebase user sync skipped:", error.message);
+  }
+
+  return fallbackUser;
+}
+
+function getFirebaseAuthMessage(error, loginMode) {
+  const code = error?.code || "";
+  const messages = {
+    "auth/email-already-in-use":
+      "Email này đã được đăng ký. Bạn hãy chuyển sang đăng nhập.",
+    "auth/invalid-email": "Email không hợp lệ.",
+    "auth/invalid-credential": "Email hoặc mật khẩu không đúng.",
+    "auth/user-not-found": "Không tìm thấy tài khoản với email này.",
+    "auth/wrong-password": "Mật khẩu không đúng.",
+    "auth/weak-password": "Mật khẩu cần ít nhất 6 ký tự.",
+    "auth/network-request-failed":
+      "Không kết nối được Firebase. Vui lòng kiểm tra mạng rồi thử lại.",
+    "auth/operation-not-allowed":
+      "Firebase chưa bật phương thức Email/Password. Hãy bật trong Firebase Console.",
+    "auth/configuration-not-found":
+      "Firebase Authentication chưa được cấu hình đúng. Hãy bật Authentication và Email/Password trong Firebase Console.",
+    "auth/app-not-authorized":
+      "Ứng dụng này chưa được phép dùng Firebase Auth. Hãy kiểm tra API key, authDomain và Authorized domains trong Firebase Console.",
+    "auth/unauthorized-domain":
+      "Domain localhost chưa được phép đăng nhập Firebase. Hãy thêm localhost trong Authentication > Settings > Authorized domains.",
+    "auth/invalid-api-key":
+      "Firebase API key không hợp lệ. Hãy kiểm tra lại cấu hình Firebase.",
+    "auth/admin-restricted-operation":
+      "Firebase đang chặn thao tác đăng ký. Hãy kiểm tra cấu hình Authentication trong Firebase Console.",
+    "auth/missing-password": "Vui lòng nhập mật khẩu.",
+    "auth/too-many-requests":
+      "Bạn thao tác quá nhiều lần. Vui lòng thử lại sau ít phút.",
+  };
+
+  return (
+    messages[code] ||
+    `Không thể ${loginMode ? "đăng nhập" : "đăng ký"} lúc này. Mã lỗi Firebase: ${code || "unknown"}.`
+  );
+}
+
+function setAuthLoading(isLoading) {
+  if (!authSubmitBtn) return;
+  authSubmitBtn.disabled = isLoading;
+  authSubmitBtn.textContent = isLoading
+    ? isLoginMode
+      ? "Đang đăng nhập..."
+      : "Đang đăng ký..."
+    : isLoginMode
+      ? "Đăng nhập ngay"
+      : "Đăng ký tài khoản";
+}
+
+async function authenticateWithFirebase(email, password) {
+  const credential = isLoginMode
+    ? await signInWithEmailAndPassword(auth, email, password)
+    : await createUserWithEmailAndPassword(auth, email, password);
+
+  await cacheFirebaseUser(credential.user);
+  return credential.user;
+}
+
+window.logoutCurrentUser = async function () {
+  try {
+    await signOut(auth);
+  } finally {
+    cacheAuthUser(null);
+  }
+};
 
 if (authToggleLink) {
   authToggleLink.addEventListener("click", () => {
@@ -1406,43 +1650,44 @@ if (authToggleLink) {
     authToggleLink.textContent = isLoginMode
       ? "Đăng ký ngay"
       : "Đăng nhập ngay";
-    if (authRememberRow)
+    if (authRememberRow) {
       authRememberRow.style.display = isLoginMode ? "flex" : "none";
+    }
   });
 }
 
 if (authForm) {
   authForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("auth-email").value;
+    const email = document.getElementById("auth-email").value.trim();
     const password = document.getElementById("auth-password").value;
 
+    if (!email || !password) {
+      alert("Vui lòng nhập email và mật khẩu.");
+      return;
+    }
+
+    setAuthLoading(true);
+
     try {
-      if (isLoginMode) {
-        await signInWithEmailAndPassword(auth, email, password);
-        alert("🎉 Đăng nhập thành công!");
-      } else {
-        await createUserWithEmailAndPassword(auth, email, password);
-        alert("🎉 Đăng ký thành công! Chào mừng thành viên mới.");
-      }
+      await authenticateWithFirebase(email, password);
+      alert(isLoginMode ? "Đăng nhập thành công!" : "Đăng ký thành công!");
       window.location.href = "index.html";
-    } catch (error) {
-      console.error(error);
-      alert(`❌ Lỗi: ${error.message}`);
+    } catch (firebaseError) {
+      console.error(firebaseError);
+      alert(getFirebaseAuthMessage(firebaseError, isLoginMode));
+    } finally {
+      setAuthLoading(false);
     }
   });
 }
 
-// Track Auth State
+updateAuthButtons(null);
+
 onAuthStateChanged(auth, (user) => {
-  const loginBtns = document.querySelectorAll(".btn-login");
-  loginBtns.forEach((btn) => {
-    if (user) {
-      btn.innerHTML = `<i class="fa-solid fa-user"></i> ${user.email.split("@")[0]}`;
-      btn.dataset.authAction = "logout";
-    } else {
-      btn.innerHTML = "Đăng nhập";
-      btn.dataset.authAction = "login";
-    }
-  });
+  if (!user) {
+    cacheAuthUser(null);
+    return;
+  }
+  cacheFirebaseUser(user);
 });

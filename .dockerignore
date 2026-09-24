@@ -1,6 +1,15 @@
 node_modules
 dist
+dist-ssr
+build
 .git
+.env
+.env.*
 .vscode
 .venv
+__pycache__
+tmp
+test-results
+playwright-report
 npm-debug.log
+*.log

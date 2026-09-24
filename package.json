@@ -1,17 +1,25 @@
 {
+  "name": "minh-aquarium",
+  "version": "1.0.0",
+  "description": "Nền tảng thương mại điện tử & dịch vụ thủy sinh Minh Aquarium",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "start": "node server/server.js",
-    "test:e2e": "playwright test"
+    "frontend:dev": "npm --prefix frontend run dev",
+    "frontend:build": "npm --prefix frontend run build",
+    "chatbot:cli": "python tools/chatbot.py",
+    "seed:db": "node scripts/seed_database_from_products.js",
+    "test:e2e": "node scripts/run_playwright.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "cors": "^2.8.6",
     "dotenv": "^16.6.1",
     "express": "^5.2.1",
-    "firebase": "^11.6.0",
+    "firebase": "^11.10.0",
+    "firebase-admin": "^13.9.0",
     "mysql2": "^3.20.0"
   },
   "devDependencies": {
