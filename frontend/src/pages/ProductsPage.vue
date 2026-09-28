@@ -53,8 +53,8 @@
             <span>{{ formatPrice(priceRange[1]) }}</span>
           </div>
           <div class="range-inputs">
-            <input type="range" min="0" max="300000" step="5000" v-model.number="priceRange[0]" />
-            <input type="range" min="0" max="300000" step="5000" v-model.number="priceRange[1]" />
+            <input type="range" min="0" :max="MAX_PRICE" step="10000" :value="priceRange[0]" @input="onMinPrice(+$event.target.value)" />
+            <input type="range" min="0" :max="MAX_PRICE" step="10000" :value="priceRange[1]" @input="onMaxPrice(+$event.target.value)" />
           </div>
           <button class="btn btn-outline btn-sm btn-full mt-8" @click="resetFilters">
             <i class="fa-solid fa-rotate-left"></i> Xóa bộ lọc
@@ -135,10 +135,21 @@ import ProductDetailModal from '@/components/ProductDetailModal.vue'
 const route = useRoute()
 const selectedProduct = ref(null)
 
+// Giá cao nhất trong danh mục, làm tròn lên 50.000đ để đặt trần thanh trượt
+const MAX_PRICE = Math.ceil(Math.max(...products.map(p => p.price)) / 50000) * 50000
+
 const activeCat  = ref('')
 const searchQ    = ref('')
 const sortBy     = ref('default')
-const priceRange = ref([0, 300000])
+const priceRange = ref([0, MAX_PRICE])
+
+// Giữ min <= max khi kéo hai thanh trượt
+function onMinPrice(v) {
+  priceRange.value[0] = Math.min(v, priceRange.value[1])
+}
+function onMaxPrice(v) {
+  priceRange.value[1] = Math.max(v, priceRange.value[0])
+}
 
 // Read URL params on mount & route change
 function syncFromRoute() {
@@ -187,7 +198,7 @@ function resetFilters() {
   activeCat.value  = ''
   searchQ.value    = ''
   sortBy.value     = 'default'
-  priceRange.value = [0, 300000]
+  priceRange.value = [0, MAX_PRICE]
 }
 </script>
 

@@ -33,7 +33,7 @@
 
       <div class="nf-links">
         <RouterLink to="/blog"><i class="fa-solid fa-book-open"></i> Kiến thức thủy sinh</RouterLink>
-        <RouterLink to="/services"><i class="fa-solid fa-wand-magic-sparkles"></i> Dịch vụ setup bể</RouterLink>
+        <RouterLink to="/services"><i class="fa-solid fa-screwdriver-wrench"></i> Dịch vụ setup bể</RouterLink>
         <RouterLink to="/cart"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</RouterLink>
       </div>
     </div>
@@ -61,7 +61,7 @@ function bubbleStyle(i) {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #0a1f14 0%, #1a4a2a 60%, #0d3320 100%);
+  background: #14532d;
 }
 
 /* Background bubbles */

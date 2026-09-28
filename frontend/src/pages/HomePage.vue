@@ -9,38 +9,27 @@
 
     <!-- ===== HERO BANNER ===== -->
     <section class="hero-section">
-      <div class="hero-bg">
-        <div class="hero-particles">
-          <span v-for="i in 12" :key="i" class="particle" :style="particleStyle(i)"></span>
-        </div>
-      </div>
+      <div class="hero-bg"></div>
       <div class="container hero-inner">
         <div class="hero-content">
           <div class="hero-tag">
-            <i class="fa-solid fa-fish"></i> Cửa hàng thủy sinh #1 Hà Đông
+            <i class="fa-solid fa-location-dot"></i> La Khê, Hà Đông, Hà Nội
           </div>
           <h1 class="hero-title">
-            Thế giới thủy sinh<br />
-            <span class="hero-accent">sống động</span> trong tầm tay
+            Cá cảnh, tép cảnh &amp;<br />
+            <span class="hero-accent">cây thủy sinh</span> cho bể nhà bạn
           </h1>
           <p class="hero-desc">
-            Hơn 129 loại cá cảnh, tép cảnh, cây thủy sinh và thiết bị chuyên dụng.
-            Cam kết chất lượng – Giao hàng toàn quốc.
+            Minh Aquarium cung cấp cá cảnh, tép cảnh, cây thủy sinh, thiết bị lọc,
+            đèn chuyên dụng và nhận setup bể trọn gói. Giao hàng toàn quốc, hỗ trợ COD.
           </p>
           <div class="hero-actions">
             <RouterLink to="/products" class="btn btn-primary btn-xl">
-              <i class="fa-solid fa-store"></i> Khám phá sản phẩm
+              <i class="fa-solid fa-store"></i> Xem sản phẩm
             </RouterLink>
             <RouterLink to="/services" class="btn btn-ghost btn-xl">
-              <i class="fa-solid fa-wand-magic-sparkles"></i> Dịch vụ setup bể
+              <i class="fa-solid fa-screwdriver-wrench"></i> Dịch vụ setup bể
             </RouterLink>
-          </div>
-          <div class="hero-stats">
-            <div class="stat"><strong>129+</strong><span>Sản phẩm</span></div>
-            <div class="stat-sep"></div>
-            <div class="stat"><strong>5 năm</strong><span>Kinh nghiệm</span></div>
-            <div class="stat-sep"></div>
-            <div class="stat"><strong>2,000+</strong><span>Khách hàng</span></div>
           </div>
         </div>
         <!-- Banner carousel -->
@@ -144,10 +133,10 @@
       <div class="container cta-inner">
         <div class="cta-content">
           <div class="section-tag" style="background:rgba(255,255,255,0.15); color:white">
-            <i class="fa-solid fa-wand-magic-sparkles"></i> Dịch vụ chuyên nghiệp
+            <i class="fa-solid fa-screwdriver-wrench"></i> Dịch vụ setup bể
           </div>
-          <h2>Muốn có một bể thủy sinh<br/><strong>đẹp mà không mất thời gian?</strong></h2>
-          <p>Đội ngũ chuyên gia của Minh Aquarium sẽ setup bể theo ý tưởng của bạn. Từ tư vấn chọn cây, cá, thiết bị đến lắp đặt hoàn chỉnh tại nhà.</p>
+          <h2>Nhận thiết kế &amp; setup<br/><strong>bể thủy sinh trọn gói</strong></h2>
+          <p>Minh Aquarium tư vấn chọn cây, cá, thiết bị và lắp đặt hoàn chỉnh tại nhà theo phong cách bạn mong muốn (Iwagumi, Biotope, rừng nhiệt đới...). Liên hệ để được báo giá.</p>
           <div class="cta-actions">
             <RouterLink to="/services" class="btn btn-xl" style="background:white; color:var(--primary)">
               <i class="fa-solid fa-calendar-check"></i> Đặt lịch tư vấn
@@ -161,7 +150,7 @@
     </section>
 
     <!-- ===== TÉP CẢNH ===== -->
-    <section class="section" style="background: var(--bg-section)">
+    <section v-if="shrimpProducts.length" class="section" style="background: var(--bg-section)">
       <div class="container">
         <div class="section-header">
           <div>
@@ -231,33 +220,21 @@ const fishProducts     = computed(() => products.filter(p => p.cat === 'ca-canh'
 const shrimpProducts   = computed(() => products.filter(p => p.cat === 'tep-canh').slice(0, 8))
 const plantProducts    = computed(() => products.filter(p => p.cat === 'cay-thuy-sinh').slice(0, 10))
 
-// Particle styles
-function particleStyle(i) {
-  const size = (i % 3 + 1) * 8
-  return {
-    width: size + 'px', height: size + 'px',
-    top: Math.random() * 100 + '%',
-    left: Math.random() * 100 + '%',
-    animationDelay: (i * 0.7) + 's',
-    animationDuration: (8 + i * 0.5) + 's',
-  }
-}
-
 const trusts = [
   { icon: 'fa-truck-fast',      title: 'Giao hàng toàn quốc', desc: 'Ship tận nơi, đóng gói an toàn',     bg: '#eaf6f0', color: '#1a6b45' },
-  { icon: 'fa-shield-halved',   title: 'Bảo hành sinh vật',   desc: 'Cam kết 7 ngày, đổi trả miễn phí',   bg: '#fff0ef', color: '#e53935' },
-  { icon: 'fa-star',            title: 'Chất lượng đảm bảo',  desc: 'Nhập khẩu trực tiếp, hàng tuyển chọn', bg: '#fffbeb', color: '#f59e0b' },
-  { icon: 'fa-headset',         title: 'Hỗ trợ 24/7',         desc: 'Tư vấn miễn phí mọi lúc mọi nơi',    bg: '#f0f0ff', color: '#6366f1' },
+  { icon: 'fa-shield-halved',   title: 'Bảo hành sinh vật',   desc: 'Cam kết 7 ngày, đổi trả nếu lỗi',    bg: '#f3ece2', color: '#a86a3d' },
+  { icon: 'fa-seedling',        title: 'Hàng tuyển chọn',     desc: 'Cá khỏe, cây sạch, chọn kỹ từng con', bg: '#eaf6f0', color: '#2f6b52' },
+  { icon: 'fa-headset',         title: 'Tư vấn tận tình',     desc: 'Hỗ trợ chọn cây, cá và cách chăm',   bg: '#eef4f0', color: '#3d8168' },
 ]
 </script>
 
 <style scoped>
 /* ===== HERO ===== */
 .hero-section {
-  background: linear-gradient(135deg, #0a1f14 0%, #1a4a2a 50%, #0d3320 100%);
+  background: #14532d;
   position: relative;
   overflow: hidden;
-  min-height: 580px;
+  min-height: 520px;
   display: flex;
   align-items: center;
 }
@@ -265,22 +242,8 @@ const trusts = [
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: url('/images/anh/logo_transparent.png') right -100px center / 500px no-repeat;
-  opacity: 0.04;
-}
-
-.hero-particles { position: absolute; inset: 0; pointer-events: none; }
-.particle {
-  position: absolute;
-  background: rgba(255,255,255,0.08);
-  border-radius: 50%;
-  animation: float linear infinite;
-}
-@keyframes float {
-  0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 0.6; }
-  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+  background: url('/images/anh/logo_transparent.png') right -100px center / 460px no-repeat;
+  opacity: 0.05;
 }
 
 .hero-inner {
@@ -288,7 +251,7 @@ const trusts = [
   grid-template-columns: 1fr 1fr;
   gap: 48px;
   align-items: center;
-  padding: 60px 20px;
+  padding: 56px 20px;
   position: relative;
   z-index: 1;
 }
@@ -297,10 +260,9 @@ const trusts = [
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: var(--gold);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #ffe6c7;
   font-size: 13px;
   font-weight: 600;
   padding: 6px 14px;
@@ -308,40 +270,31 @@ const trusts = [
   margin-bottom: 18px;
 }
 .hero-title {
-  font-size: clamp(28px, 4vw, 46px);
-  font-weight: 900;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
   color: white;
-  line-height: 1.15;
+  line-height: 1.18;
   margin-bottom: 16px;
 }
 .hero-accent {
-  background: linear-gradient(90deg, #4ade80, #86efac);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #86efac;
 }
 .hero-desc {
   font-size: 16px;
-  color: rgba(255,255,255,0.72);
+  color: rgba(255,255,255,0.78);
   line-height: 1.7;
   margin-bottom: 28px;
   max-width: 480px;
 }
-.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 36px; }
-
-.hero-stats { display: flex; align-items: center; gap: 20px; }
-.stat { display: flex; flex-direction: column; }
-.stat strong { font-size: 22px; font-weight: 800; color: white; }
-.stat span { font-size: 12px; color: rgba(255,255,255,0.55); }
-.stat-sep { width: 1px; height: 36px; background: rgba(255,255,255,0.15); }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
 
 /* Banner */
 .hero-banner { overflow: hidden; }
 .banner-wrap {
   position: relative;
-  border-radius: var(--r-xl);
+  border-radius: var(--r-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
   aspect-ratio: 16/9;
 }
 .banner-track {
@@ -486,7 +439,7 @@ const trusts = [
 .cta-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #0a1f14 0%, #1a6b45 60%, #2a8a5a 100%);
+  background: #14532d;
 }
 .cta-inner { position: relative; z-index: 1; }
 .cta-content { max-width: 680px; color: white; }

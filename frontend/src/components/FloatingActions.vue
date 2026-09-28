@@ -5,15 +5,14 @@
       <i class="fa-solid fa-comment-dots"></i>
     </a>
 
-    <!-- Chat AI toggle -->
+    <!-- Chat toggle -->
     <button
       class="floater chat-ai"
       :class="{ active: chatOpen }"
       @click="chatOpen = !chatOpen"
-      aria-label="Chat tư vấn AI"
+      aria-label="Chat tư vấn"
     >
       <i :class="chatOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-comments'"></i>
-      <span v-if="!chatOpen" class="chat-pulse"></span>
     </button>
 
     <!-- Scroll top -->
@@ -80,21 +79,6 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 .chat-ai { background: var(--primary); font-size: 22px; }
 .chat-ai.active { background: var(--primary-dark); }
 .scroll-top { background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); font-size: 16px; width: 42px; height: 42px; }
-
-/* Pulse ring */
-.chat-pulse {
-  position: absolute;
-  top: -2px; right: -2px;
-  width: 14px; height: 14px;
-  background: var(--accent);
-  border-radius: 50%;
-  border: 2px solid white;
-  animation: chatBounce 2s infinite;
-}
-@keyframes chatBounce {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-}
 
 /* Transitions */
 .fade-up-enter-active, .fade-up-leave-active { transition: all 0.25s ease; }

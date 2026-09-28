@@ -113,7 +113,7 @@
           <a href="products.html?q=Thức Ăn"><i class="fa-solid fa-bowl-food"></i> Thức Ăn Cho Cá/Tép</a>
           <a href="products.html?q=Thuốc"><i class="fa-solid fa-pills"></i> Thuốc & Chế Phẩm</a>
           <a href="products.html?q=Phụ Kiện"><i class="fa-solid fa-box-open"></i> Phụ Kiện Khác</a>
-          <a href="services.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Dịch Vụ Setup Bể</a>
+          <a href="services.html"><i class="fa-solid fa-screwdriver-wrench"></i> Dịch Vụ Setup Bể</a>
         </aside>
 
         <!-- Right: Banner carousel -->
@@ -179,7 +179,7 @@
       <section class="section-block">
         <div class="container">
           <div class="section-heading">
-            <h2>🐟 Cá Cảnh</h2>
+            <h2>Cá Cảnh</h2>
             <a href="products.html?q=Cá Cảnh" class="btn-view-all">Xem tất cả <i class="fa-solid fa-angle-right"></i></a>
           </div>
           <div class="product-grid" id="fish-grid">
@@ -262,7 +262,7 @@
       <section class="section-block">
         <div class="container">
           <div class="section-heading">
-            <h2>🦐 Tép Cảnh</h2>
+            <h2>Tép Cảnh</h2>
             <a href="products.html?q=Tép Cảnh" class="btn-view-all">Xem tất cả <i class="fa-solid fa-angle-right"></i></a>
           </div>
           <div class="product-grid">
@@ -344,7 +344,7 @@
       <section class="section-block">
         <div class="container">
           <div class="section-heading">
-            <h2>🌿 Cây Thủy Sinh</h2>
+            <h2>Cây Thủy Sinh</h2>
             <a href="products.html?q=Cây Thủy Sinh" class="btn-view-all">Xem tất cả <i class="fa-solid fa-angle-right"></i></a>
           </div>
           <div class="product-grid">
@@ -424,7 +424,7 @@
       <section class="section-block">
         <div class="container">
           <div class="section-heading">
-            <h2>💡 Đèn &amp; Thiết Bị</h2>
+            <h2>Đèn &amp; Thiết Bị</h2>
             <a href="products.html?q=Đèn" class="btn-view-all">Xem tất cả <i class="fa-solid fa-angle-right"></i></a>
           </div>
           <div class="product-grid">
@@ -505,7 +505,7 @@
       <section class="section-block">
         <div class="container">
           <div class="section-heading">
-            <h2>📰 Tin Nổi Bật</h2>
+            <h2>Tin Nổi Bật</h2>
             <a href="blog.html" class="btn-view-all">Xem tất cả <i class="fa-solid fa-angle-right"></i></a>
           </div>
           <div class="blog-grid">
@@ -537,8 +537,8 @@
       <!-- ===== SETUP SERVICE CTA ===== -->
       <section class="setup-service">
         <div class="container text-center">
-          <h2>🏆 Dịch Vụ Setup Bể Thủy Sinh</h2>
-          <p>Đội ngũ chuyên nghiệp hơn 10 năm kinh nghiệm, thiết kế và setup bể thủy sinh theo phong cách của bạn. Tư vấn miễn phí!</p>
+          <h2>Dịch Vụ Setup Bể Thủy Sinh</h2>
+          <p>Đội ngũ nhận thiết kế và setup bể thủy sinh theo phong cách bạn mong muốn, tư vấn kích thước và bố cục phù hợp. Liên hệ để được báo giá.</p>
           <a href="services.html" class="btn-white">Đặt lịch tư vấn ngay <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </section>
@@ -616,16 +616,6 @@
       </div>
     </footer>
 
-    <!-- ===== SOCIAL PROOF POPUP ===== -->
-    <div class="social-proof-popup" id="social-proof-popup">
-      <div class="sp-avatar"><i class="fa-solid fa-bag-shopping"></i></div>
-      <div class="sp-text">
-        <strong id="sp-message">Khách tại Hà Nội vừa đặt Cá Betta Halfmoon</strong>
-        <small id="sp-time">2 phút trước</small>
-      </div>
-      <span class="sp-close" id="sp-close" title="Đóng">×</span>
-    </div>
-
     <!-- ===== FLOATER BUTTONS ===== -->
     <div class="chat-floaters">
       <a href="https://zalo.me/0123456789" target="_blank" class="floater-btn floater-zalo" title="Chat Zalo">
@@ -685,34 +675,6 @@
         const btn = document.getElementById('scroll-top-btn');
         if (!btn) return;
         window.addEventListener('scroll', ()=> btn.classList.toggle('visible', window.scrollY > 300));
-      })();
-
-      // ===== SOCIAL PROOF POPUP =====
-      (function(){
-        const popup = document.getElementById('social-proof-popup');
-        const closeBtn = document.getElementById('sp-close');
-        const msg = document.getElementById('sp-message');
-        const time = document.getElementById('sp-time');
-        if (!popup) return;
-        const orders = [
-          {name:'Cá Betta Halfmoon Xanh', city:'Hà Nội'},
-          {name:'Tép Ong Đen Taiwan Bee', city:'Hà Đông'},
-          {name:'Rêu Mini Fiss', city:'Đống Đa'},
-          {name:'Đèn LED Chihiros WRGB', city:'Cầu Giấy'},
-          {name:'Tép Sakura Fire Red', city:'Hoàng Mai'},
-          {name:'Phân Nền ADA Aqua Soil', city:'Long Biên'},
-        ];
-        const times = ['vừa xong','1 phút trước','2 phút trước','5 phút trước','7 phút trước','10 phút trước'];
-        function showNext(){
-          const o = orders[Math.floor(Math.random()*orders.length)];
-          const t = times[Math.floor(Math.random()*times.length)];
-          msg.textContent = `Khách tại ${o.city} vừa đặt ${o.name}`;
-          time.textContent = t;
-          popup.classList.remove('hidden');
-          setTimeout(()=>popup.classList.add('hidden'), 5000);
-        }
-        setTimeout(()=>{ showNext(); setInterval(showNext, 18000); }, 6000);
-        closeBtn && closeBtn.addEventListener('click', ()=>popup.classList.add('hidden'));
       })();
     </script>
   </body>

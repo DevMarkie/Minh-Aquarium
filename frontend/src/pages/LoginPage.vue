@@ -155,7 +155,7 @@ function handleRegister() {
 
 /* Left panel */
 .login-panel {
-  background: linear-gradient(160deg, #0a1f14 0%, #1a6b45 100%);
+  background: #14532d;
   padding: 48px 36px;
   display: flex;
   align-items: center;

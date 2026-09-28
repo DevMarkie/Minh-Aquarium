@@ -28,12 +28,12 @@
 
               <div class="modal-price-row">
                 <span class="modal-price">{{ formatPrice(product.price) }}</span>
-                <span class="modal-unit">/ con</span>
+                <span class="modal-unit">/ {{ unitLabel(product.cat) }}</span>
               </div>
 
               <!-- Stock indicator -->
               <div class="stock-badge">
-                <span class="stock-dot"></span> Còn hàng – Sẵn sàng giao
+                <span class="stock-dot"></span> Còn hàng
               </div>
 
               <!-- Description -->
@@ -123,7 +123,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useCart } from '@/composables/useCart'
-import { products, formatPrice } from '@/data/products'
+import { products, formatPrice, unitLabel } from '@/data/products'
 
 const props = defineProps({
   product: { type: Object, default: null },
@@ -189,9 +189,9 @@ function getCareTags(product) {
 }
 
 const guarantees = [
-  { icon: 'fa-solid fa-shield-halved', color: '#1a6b45', label: 'Bảo hành sinh vật 7 ngày' },
-  { icon: 'fa-solid fa-truck-fast',    color: '#2563eb', label: 'Giao hàng toàn quốc' },
-  { icon: 'fa-solid fa-rotate-left',   color: '#f59e0b', label: 'Đổi trả trong 24h' },
+  { icon: 'fa-solid fa-shield-halved', color: 'var(--primary)', label: 'Bảo hành sinh vật 7 ngày' },
+  { icon: 'fa-solid fa-truck-fast',    color: 'var(--primary)', label: 'Giao hàng toàn quốc' },
+  { icon: 'fa-solid fa-rotate-left',   color: 'var(--primary)', label: 'Đổi trả nếu lỗi' },
 ]
 </script>
 
@@ -288,14 +288,14 @@ const guarantees = [
   gap: 7px;
   font-size: 12.5px;
   font-weight: 600;
-  color: #16a34a;
-  background: #f0fff4;
-  border: 1px solid #bbf7d0;
+  color: var(--primary);
+  background: var(--primary-light);
+  border: 1px solid var(--border);
   border-radius: var(--r-full);
   padding: 4px 12px;
   width: fit-content;
 }
-.stock-dot { width: 8px; height: 8px; background: #16a34a; border-radius: 50%; animation: pulse 2s infinite; }
+.stock-dot { width: 8px; height: 8px; background: var(--primary); border-radius: 50%; }
 
 .modal-desc { font-size: 13.5px; color: var(--text-muted); line-height: 1.7; }
 

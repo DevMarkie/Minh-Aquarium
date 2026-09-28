@@ -4,12 +4,12 @@
     <section class="svc-hero">
       <div class="container">
         <div class="section-tag" style="background:rgba(255,255,255,0.15); color:white">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> Dịch vụ chuyên nghiệp
+          <i class="fa-solid fa-screwdriver-wrench"></i> Dịch vụ setup bể
         </div>
         <h1>Dịch Vụ Setup Bể Thủy Sinh</h1>
-        <p>Đội ngũ kỹ thuật viên giàu kinh nghiệm, trang thiết bị hiện đại – chúng tôi biến ý tưởng của bạn thành hiện thực.</p>
+        <p>Shop nhận tư vấn, thiết kế và lắp đặt bể thủy sinh tại nhà khu vực Hà Nội. Chọn cây, cá, thiết bị và setup hoàn chỉnh theo phong cách bạn muốn.</p>
         <a href="tel:0123456789" class="btn btn-xl" style="background:white; color:var(--primary)">
-          <i class="fa-solid fa-phone"></i> Tư vấn miễn phí ngay
+          <i class="fa-solid fa-phone"></i> Gọi tư vấn: 0123 456 789
         </a>
       </div>
     </section>
@@ -59,8 +59,8 @@
     <section class="section">
       <div class="container">
         <div class="svc-cta">
-          <h2>Sẵn sàng có bể thủy sinh mơ ước?</h2>
-          <p>Liên hệ ngay hôm nay để được tư vấn miễn phí và báo giá chi tiết.</p>
+          <h2>Cần tư vấn setup bể thủy sinh?</h2>
+          <p>Liên hệ với shop để được tư vấn và báo giá chi tiết theo không gian của bạn.</p>
           <div class="cta-btns">
             <a href="tel:0123456789" class="btn btn-primary btn-xl">
               <i class="fa-solid fa-phone"></i> Gọi: 0123 456 789
@@ -78,25 +78,25 @@
 <script setup>
 const services = [
   { id:1, icon:'fa-water', title:'Setup bể cơ bản', desc:'Thiết kế và lắp đặt hệ thống lọc, đèn, phân nền cơ bản. Phù hợp bể 30–60cm.', priceFrom:'800.000đ', bg:'#eaf6f0', color:'#1a6b45' },
-  { id:2, icon:'fa-seedling', title:'Setup bể Dutch', desc:'Trồng cây theo phong cách Dutch cổ điển với nhiều màu sắc, tầng lớp rõ ràng.', priceFrom:'1.500.000đ', bg:'#f0fff4', color:'#16a34a' },
-  { id:3, icon:'fa-mountain', title:'Setup bể Nature Aquarium', desc:'Phong cách thiên nhiên theo Takashi Amano với đá Iwagumi, cây mịn và cá nhỏ.', priceFrom:'2.000.000đ', bg:'#fffbeb', color:'#f59e0b' },
-  { id:4, icon:'fa-fish', title:'Setup bể cá cảnh', desc:'Thiết kế bể tập trung vào không gian bơi lội cho cá, ít cây, dễ bảo dưỡng.', priceFrom:'600.000đ', bg:'#eff6ff', color:'#2563eb' },
-  { id:5, icon:'fa-wrench', title:'Bảo trì định kỳ', desc:'Thay nước, vệ sinh kính, cắt tỉa cây, kiểm tra thiết bị theo lịch hàng tháng.', priceFrom:'200.000đ', bg:'#fdf4ff', color:'#9333ea' },
-  { id:6, icon:'fa-graduation-cap', title:'Tư vấn & đào tạo', desc:'Hướng dẫn tận tình cho người mới: cách setup, chăm sóc, xử lý sự cố bể.', priceFrom:'Miễn phí', bg:'#fff0ef', color:'#e53935' },
+  { id:2, icon:'fa-seedling', title:'Setup bể Dutch', desc:'Trồng cây theo phong cách Dutch cổ điển với nhiều màu sắc, tầng lớp rõ ràng.', priceFrom:'1.500.000đ', bg:'#e8f5ee', color:'#2f6b52' },
+  { id:3, icon:'fa-mountain', title:'Setup bể Nature Aquarium', desc:'Phong cách thiên nhiên theo Takashi Amano với đá Iwagumi, cây mịn và cá nhỏ.', priceFrom:'2.000.000đ', bg:'#f3ece2', color:'#a86a3d' },
+  { id:4, icon:'fa-fish', title:'Setup bể cá cảnh', desc:'Thiết kế bể tập trung vào không gian bơi lội cho cá, ít cây, dễ bảo dưỡng.', priceFrom:'600.000đ', bg:'#eef4f0', color:'#3d8168' },
+  { id:5, icon:'fa-wrench', title:'Bảo trì định kỳ', desc:'Thay nước, vệ sinh kính, cắt tỉa cây, kiểm tra thiết bị theo lịch hàng tháng.', priceFrom:'200.000đ', bg:'#f3ece2', color:'#a86a3d' },
+  { id:6, icon:'fa-graduation-cap', title:'Tư vấn & đào tạo', desc:'Hướng dẫn tận tình cho người mới: cách setup, chăm sóc, xử lý sự cố bể.', priceFrom:'Miễn phí', bg:'#eaf6f0', color:'#1a7a4a' },
 ]
 
 const steps = [
   { title: 'Tư vấn & Khảo sát',  desc: 'Chúng tôi lắng nghe yêu cầu, khảo sát không gian và đề xuất phương án phù hợp.' },
   { title: 'Lên ý tưởng thiết kế', desc: 'Phác thảo layout bể, chọn đá, cây, cá và thiết bị theo ngân sách của bạn.' },
   { title: 'Thi công & Setup',    desc: 'Đội kỹ thuật thi công chuyên nghiệp, gọn gàng, đúng hẹn tại địa chỉ của bạn.' },
-  { title: 'Bàn giao & Hướng dẫn', desc: 'Hướng dẫn chi tiết cách chăm sóc, bảo hành thiết bị và hỗ trợ 24/7 sau bàn giao.' },
+  { title: 'Bàn giao & Hướng dẫn', desc: 'Hướng dẫn chi tiết cách chăm sóc, bảo hành thiết bị và hỗ trợ sau bàn giao.' },
 ]
 </script>
 
 <style scoped>
 /* Hero */
 .svc-hero {
-  background: linear-gradient(135deg, #0a1f14 0%, #1a6b45 100%);
+  background: #14532d;
   color: white;
   padding: 80px 0;
   text-align: center;
@@ -151,7 +151,7 @@ const steps = [
   font-weight: 800;
   margin-bottom: 16px;
   z-index: 1;
-  box-shadow: 0 4px 16px rgba(26,107,69,0.3);
+  box-shadow: var(--shadow-sm);
 }
 .step-connector {
   position: absolute;

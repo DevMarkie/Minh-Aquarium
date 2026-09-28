@@ -1,6 +1,6 @@
 <template>
   <Transition name="chat-slide">
-    <div v-if="open" class="chat-widget" role="dialog" aria-label="Chat tư vấn AI">
+    <div v-if="open" class="chat-widget" role="dialog" aria-label="Chat tư vấn Minh Aquarium">
       <!-- Header -->
       <div class="chat-header">
         <div class="chat-header-left">
@@ -8,8 +8,8 @@
             <i class="fa-solid fa-fish"></i>
           </div>
           <div>
-            <p class="chat-title">Trợ lý Minh Aquarium</p>
-            <span class="chat-status"><span class="status-dot"></span> Đang hoạt động</span>
+            <p class="chat-title">Tư vấn Minh Aquarium</p>
+            <span class="chat-status"><span class="status-dot"></span> Hỗ trợ trực tuyến</span>
           </div>
         </div>
         <button class="chat-close" @click="$emit('close')" aria-label="Đóng chat">
@@ -24,8 +24,8 @@
           <div class="msg-avatar"><i class="fa-solid fa-fish"></i></div>
           <div class="msg-content">
             <div class="bubble">
-              Xin chào! 👋 Tôi là trợ lý AI của <strong>Minh Aquarium</strong>.<br/>
-              Bạn cần tư vấn về cá, tép, cây thủy sinh hay thiết bị? Cứ hỏi tôi nhé!
+              Xin chào! Đây là kênh tư vấn của <strong>Minh Aquarium</strong>.<br/>
+              Bạn cần tư vấn về cá, tép, cây thủy sinh hay thiết bị? Cứ nhắn cho shop nhé!
             </div>
             <span class="msg-time">Bây giờ</span>
           </div>
@@ -156,7 +156,7 @@ async function send() {
   } catch {
     messages.value.push({
       role: 'bot',
-      text: 'Hiện tại tôi đang bận, bạn có thể gọi hotline **0123 456 789** hoặc chat Zalo để được hỗ trợ nhanh nhất nhé! 🐟',
+      text: 'Hiện shop chưa trả lời ngay được, bạn có thể gọi hotline **0123 456 789** hoặc nhắn Zalo để được hỗ trợ nhanh nhất nhé!',
       time: now(),
     })
   } finally {

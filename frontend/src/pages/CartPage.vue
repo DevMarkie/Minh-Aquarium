@@ -24,7 +24,7 @@
             <div class="item-info">
               <p class="item-cat">{{ item.catLabel }}</p>
               <h4 class="item-name">{{ item.name }}</h4>
-              <p class="item-unit-price">{{ formatPrice(item.price) }} / con</p>
+              <p class="item-unit-price">{{ formatPrice(item.price) }} / {{ unitLabel(item.cat) }}</p>
             </div>
             <div class="item-qty">
               <button @click="updateQty(item.id, item.qty - 1)" :disabled="item.qty <= 1">
@@ -34,7 +34,7 @@
                 type="number"
                 :value="item.qty"
                 min="1"
-                @change="updateQty(item.id, +$event.target.value)"
+                @change="updateQty(item.id, Number($event.target.value) || 1)"
               />
               <button @click="updateQty(item.id, item.qty + 1)">
                 <i class="fa-solid fa-plus"></i>
@@ -95,7 +95,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useCart } from '@/composables/useCart'
-import { formatPrice } from '@/data/products'
+import { formatPrice, unitLabel } from '@/data/products'
 import CheckoutModal from '@/components/CheckoutModal.vue'
 
 const { items, totalCount, totalPrice, removeItem, updateQty, clearCart } = useCart()

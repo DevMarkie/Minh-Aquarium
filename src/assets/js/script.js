@@ -685,7 +685,7 @@ if (window.location.pathname.includes("cart.html")) {
 
   window.submitOrder = function () {
     alert(
-      "🎉 Chúc mừng bạn đã đặt hàng thành công! Nhân viên Minh Aquarium sẽ đóng gói hỏa tốc gửi đi ngay bây giờ.",
+      "Đặt hàng thành công! Minh Aquarium sẽ liên hệ xác nhận và gửi hàng cho bạn trong thời gian sớm nhất.",
     );
     cart = [];
     localStorage.removeItem("minhaq_cart");
@@ -1408,77 +1408,6 @@ if (document.readyState === "loading") {
   initAdvancedSidebarFilters();
 }
 
-// ========= Aqua Bubble Background Effect =========
-document.addEventListener("DOMContentLoaded", () => {
-  const path = window.location.pathname.toLowerCase();
-  const isHomePage =
-    path.endsWith("/index.html") ||
-    path === "/" ||
-    path.endsWith("/") ||
-    path === "index.html";
-  if (!isHomePage) return;
-
-  // Setup deep blue aquarium gradient base
-  document.body.style.background =
-    "linear-gradient(to bottom right, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%)";
-  document.body.style.backgroundAttachment = "fixed";
-
-  // Create Bubbles Container
-  const bubblesContainer = document.createElement("div");
-  bubblesContainer.className = "aqua-bubbles-container";
-  Object.assign(bubblesContainer.style, {
-    position: "fixed",
-    top: "0",
-    left: "0",
-    width: "100vw",
-    height: "100vh",
-    zIndex: "-1",
-    overflow: "hidden",
-    pointerEvents: "none",
-  });
-
-  // Generate random bubbles
-  for (let i = 0; i < 30; i++) {
-    const bubble = document.createElement("div");
-    const size = Math.random() * 35 + 5; // 5px to 40px
-    const left = Math.random() * 100;
-    const duration = Math.random() * 10 + 5; // 5s to 15s
-    const delay = Math.random() * 5;
-
-    Object.assign(bubble.style, {
-      position: "absolute",
-      bottom: "-60px",
-      left: `${left}%`,
-      width: `${size}px`,
-      height: `${size}px`,
-      background: "rgba(255, 255, 255, 0.4)",
-      border: "1px solid rgba(255, 255, 255, 0.7)",
-      borderRadius: "50%",
-      boxShadow: "inset 0 0 10px rgba(255,255,255,0.4)",
-      animation: `aquaRise ${duration}s infinite ease-in-out ${delay}s`,
-    });
-
-    bubblesContainer.appendChild(bubble);
-  }
-
-  document.body.appendChild(bubblesContainer);
-
-  // Inject Keyframes dynamically
-  if (!document.getElementById("aqua-bubble-css")) {
-    const style = document.createElement("style");
-    style.id = "aqua-bubble-css";
-    style.innerHTML = `
-            @keyframes aquaRise {
-                0% { transform: translateY(0) scale(1) translateX(0); opacity: 0; }
-                10% { opacity: 1; }
-                50% { transform: translateY(-50vh) scale(1.1) translateX(15px); }
-                90% { opacity: 0.8; }
-                100% { transform: translateY(-110vh) scale(1.4) translateX(-15px); opacity: 0; }
-            }
-        `;
-    document.head.appendChild(style);
-  }
-});
 // ========= Auth Logic =========
 const AUTH_STORAGE_KEY = "minhaq_user";
 const authForm = document.getElementById("auth-form");
