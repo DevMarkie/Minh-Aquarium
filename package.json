@@ -10,7 +10,11 @@
     "frontend:dev": "npm --prefix frontend run dev",
     "frontend:build": "npm --prefix frontend run build",
     "chatbot:cli": "python tools/chatbot.py",
+    "migrate": "node scripts/migrate.js",
     "seed:db": "node scripts/seed_database_from_products.js",
+    "test:db": "node tests/db/test_db.js",
+    "test:api": "node tests/api/api.test.js",
+    "test": "npm run test:db && npm run test:api",
     "test:e2e": "node scripts/run_playwright.js"
   },
   "dependencies": {
@@ -24,6 +28,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.49.1",
+    "autocannon": "^9.0.0",
     "vite": "^6.0.0"
   }
 }

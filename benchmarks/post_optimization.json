@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-11-15T04:31:09.293Z",
+  "api": {
+    "products": {
+      "requestsPerSec": 2859.9,
+      "latencyAvgMs": 8.28,
+      "latencyP95Ms": 15,
+      "throughputMbSec": 436.94,
+      "totalRequests": 28593,
+      "errors": 0,
+      "non2xx": 0
+    },
+    "chatbot": {
+      "requestsPerSec": 4387,
+      "latencyAvgMs": 1.75,
+      "latencyP95Ms": 4,
+      "throughputMbSec": 1.88,
+      "totalRequests": 48252,
+      "errors": 0,
+      "non2xx": 48240
+    }
+  },
+  "payload": {
+    "imagesMb": 37.48,
+    "imagesBytes": 39296628,
+    "imagesCount": 175,
+    "distMb": 22.29,
+    "distBytes": 23376748,
+    "distCount": 124
+  }
+}

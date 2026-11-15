@@ -44,3 +44,6 @@ __pycache__/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Agent & AI artifacts
+.agents/

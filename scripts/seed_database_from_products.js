@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const mysql = require("mysql2/promise");
-require("dotenv").config();
+require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 
 function slugify(value) {
   return (value || "")
@@ -29,6 +29,10 @@ function parsePrice(value) {
 
 function parseProductsHtml() {
   const htmlPath = path.join(__dirname, "..", "src", "products.html");
+  if (!fs.existsSync(htmlPath)) {
+    throw new Error(`Products HTML file not found at ${htmlPath}`);
+  }
+
   const html = fs.readFileSync(htmlPath, "utf8");
   const cardParts = html.split(/<div class="product-card"[^>]*>/).slice(1);
   const products = [];
@@ -54,44 +58,32 @@ function parseProductsHtml() {
   return products;
 }
 
-async function upsertCategory(connection, name) {
-  const baseSlug = slugify(name) || "category";
-  await connection.execute(
-    `INSERT INTO categories (name, slug)
-     VALUES (?, ?)
-     ON DUPLICATE KEY UPDATE name = VALUES(name)`,
-    [name, baseSlug],
-  );
-
-  const [rows] = await connection.execute(
-    "SELECT id FROM categories WHERE slug = ? LIMIT 1",
-    [baseSlug],
-  );
-  return rows[0].id;
-}
-
+/**
+ * High-performance batched database seeder
+ * Replaces N+1 sequential loops with bulk category resolution and multi-row inserts
+ */
 async function main() {
   const products = parseProductsHtml();
   if (products.length === 0) {
     throw new Error("No products found in src/products.html");
   }
 
+  console.log(`[seed] Parsed ${products.length} products from HTML.`);
+
   const connection = await mysql.createConnection({
     host: process.env.DB_HOST || "localhost",
-    port: Number(process.env.DB_PORT || 3306),
+    port: Number(process.env.DB_PORT || 3307),
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "",
     database: process.env.DB_NAME || "minh_aquarium",
-    multipleStatements: false,
   });
 
-  const categoryIds = new Map();
-  let insertedProducts = 0;
-  let insertedImages = 0;
+  const startTime = Date.now();
 
   try {
     await connection.beginTransaction();
 
+    // 1. Seed Demo User
     await connection.execute(
       `INSERT INTO users (full_name, email, password_hash, phone, address, role)
        VALUES (?, ?, ?, ?, ?, 'customer')
@@ -109,74 +101,131 @@ async function main() {
       ],
     );
 
-    for (const product of products) {
-      if (!categoryIds.has(product.category)) {
-        categoryIds.set(
-          product.category,
-          await upsertCategory(connection, product.category),
-        );
-      }
+    // 2. Batch Category Upsert (Single Query)
+    const uniqueCategories = [...new Set(products.map((p) => p.category))];
+    const categoryPlaceholders = uniqueCategories.map(() => "(?, ?)").join(", ");
+    const categoryValues = [];
+    uniqueCategories.forEach((cat) => {
+      categoryValues.push(cat, slugify(cat) || "category");
+    });
 
-      const categoryId = categoryIds.get(product.category);
+    await connection.query(
+      `INSERT INTO categories (name, slug)
+       VALUES ${categoryPlaceholders}
+       ON DUPLICATE KEY UPDATE name = VALUES(name)`,
+      categoryValues,
+    );
+
+    // Fetch all category IDs in a single query
+    const [categoryRows] = await connection.query(
+      "SELECT id, name, slug FROM categories WHERE name IN (?)",
+      [uniqueCategories],
+    );
+    const categoryMap = new Map();
+    categoryRows.forEach((row) => {
+      categoryMap.set(row.name, row.id);
+    });
+
+    // 3. Batch Products Upsert (Single Query)
+    const productPlaceholders = [];
+    const productValues = [];
+    const slugs = [];
+
+    for (const product of products) {
+      const categoryId = categoryMap.get(product.category) || null;
       const slug = slugify(product.name);
+      slugs.push(slug);
       const stockQuantity = 20;
 
-      await connection.execute(
-        `INSERT INTO products
-          (category_id, name, slug, description, price, stock_quantity, is_active, is_featured)
-         VALUES (?, ?, ?, ?, ?, ?, TRUE, FALSE)
-         ON DUPLICATE KEY UPDATE
-          category_id = VALUES(category_id),
-          name = VALUES(name),
-          description = VALUES(description),
-          price = VALUES(price),
-          stock_quantity = VALUES(stock_quantity),
-          is_active = TRUE`,
-        [
-          categoryId,
-          product.name,
-          slug,
-          `Sản phẩm ${product.name} tại Minh Aquarium.`,
-          product.price,
-          stockQuantity,
-        ],
+      productPlaceholders.push("(?, ?, ?, ?, ?, ?, TRUE, FALSE)");
+      productValues.push(
+        categoryId,
+        product.name,
+        slug,
+        `Sản phẩm ${product.name} tại Minh Aquarium.`,
+        product.price,
+        stockQuantity,
       );
+    }
 
-      const [productRows] = await connection.execute(
-        "SELECT id FROM products WHERE slug = ? LIMIT 1",
-        [slug],
+    await connection.query(
+      `INSERT INTO products
+        (category_id, name, slug, description, price, stock_quantity, is_active, is_featured)
+       VALUES ${productPlaceholders.join(", ")}
+       ON DUPLICATE KEY UPDATE
+        category_id = VALUES(category_id),
+        name = VALUES(name),
+        description = VALUES(description),
+        price = VALUES(price),
+        stock_quantity = VALUES(stock_quantity),
+        is_active = TRUE`,
+      productValues,
+    );
+
+    // 4. Batch Resolve Product IDs (Single Query)
+    const [productRows] = await connection.query(
+      "SELECT id, slug FROM products WHERE slug IN (?)",
+      [slugs],
+    );
+    const productSlugToId = new Map();
+    productRows.forEach((row) => {
+      productSlugToId.set(row.slug, row.id);
+    });
+
+    // 5. Batch Image Upsert (Two Queries: Delete old, Insert new multi-row)
+    const productIds = Array.from(productSlugToId.values());
+    if (productIds.length > 0) {
+      await connection.query(
+        "DELETE FROM product_images WHERE product_id IN (?)",
+        [productIds],
       );
-      const productId = productRows[0].id;
-      insertedProducts += 1;
+    }
 
-      if (product.imageUrl) {
-        await connection.execute(
-          "DELETE FROM product_images WHERE product_id = ?",
-          [productId],
-        );
-        await connection.execute(
-          `INSERT INTO product_images
-            (product_id, image_url, is_primary, sort_order)
-           VALUES (?, ?, TRUE, 0)`,
-          [productId, product.imageUrl],
-        );
-        insertedImages += 1;
+    const imagePlaceholders = [];
+    const imageValues = [];
+    let imageCount = 0;
+
+    for (const product of products) {
+      const slug = slugify(product.name);
+      const productId = productSlugToId.get(slug);
+      if (productId && product.imageUrl) {
+        imagePlaceholders.push("(?, ?, TRUE, 0)");
+        imageValues.push(productId, product.imageUrl);
+        imageCount += 1;
       }
     }
 
+    if (imagePlaceholders.length > 0) {
+      await connection.query(
+        `INSERT INTO product_images (product_id, image_url, is_primary, sort_order)
+         VALUES ${imagePlaceholders.join(", ")}`,
+        imageValues,
+      );
+    }
+
     await connection.commit();
+    const duration = Date.now() - startTime;
     console.log(
-      `Seeded ${insertedProducts} products, ${insertedImages} images, ${categoryIds.size} categories.`,
+      `[seed] Batch seeding completed in ${duration}ms! Seeded ${productRows.length} products, ${imageCount} images, and ${uniqueCategories.length} categories.`,
     );
   } catch (error) {
     await connection.rollback();
+    console.error("[seed] Transaction failed and rolled back:", error);
     throw error;
   } finally {
     await connection.end();
   }
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
+
+module.exports = {
+  main,
+  parseProductsHtml,
+  slugify,
+};
