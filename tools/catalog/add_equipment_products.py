@@ -3,6 +3,8 @@ import re
 import urllib.parse
 import random
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+
 new_dirs = [
     (r"src\assets\images\máy lọc và vật liệu lọc", "Thiết Bị Thủy Sinh"),
     (r"src\assets\images\phân nền , cốt nền , cát trải nền", "Phân Nền Thủy Sinh"),
@@ -42,8 +44,9 @@ html_blocks = []
 count = 0
 
 for d, cat_name in new_dirs:
-    if os.path.exists(d):
-        for f in os.listdir(d):
+    abs_d = os.path.join(PROJECT_ROOT, d)
+    if os.path.exists(abs_d):
+        for f in os.listdir(abs_d):
             if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp')):
                 name = os.path.splitext(f)[0].title()
                 unix_folder = d.replace('\\', '/')
@@ -71,7 +74,7 @@ for d, cat_name in new_dirs:
 
 print(f"Prepared {count} new products.")
 
-html_file = "src/products.html"
+html_file = os.path.join(PROJECT_ROOT, "src", "products.html")
 with open(html_file, 'r', encoding='utf-8') as f:
     content = f.read()
 

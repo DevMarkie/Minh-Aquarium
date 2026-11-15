@@ -1,10 +1,12 @@
 from rembg import remove
 import os
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+
 images = [
-    "src/assets/images/banner_part1.png",
-    "src/assets/images/banner_part2.png",
-    "src/assets/images/banner_part3.png",
+    os.path.join(PROJECT_ROOT, "src", "assets", "images", "banner_part1.png"),
+    os.path.join(PROJECT_ROOT, "src", "assets", "images", "banner_part2.png"),
+    os.path.join(PROJECT_ROOT, "src", "assets", "images", "banner_part3.png"),
 ]
 
 print("Đang tải AI Model tách nền...")

@@ -39,10 +39,11 @@
 
 ```text
 Minh-Aquarium/
-├── 📁 src/                       # Ứng dụng Frontend chính (Vite Multi-page)
+├── 📁 src/                       # Ứng dụng Frontend Multi-page (Vanilla JS / HTML5 / Vite)
 │   ├── 📁 assets/
 │   │   ├── 📁 css/              # Stylesheet hệ thống (style.css)
-│   │   ├── 📁 js/               # Logic giao diện, giỏ hàng, Chatbot, Firebase
+│   │   ├── 📁 js/               # Logic giao diện, giỏ hàng, Chatbot, Firebase Auth
+│   │   │   └── 📁 modules/      # Các module JavaScript độc lập (auth, cart, search, ui...)
 │   │   └── 📁 images/anh/       # Thư viện ảnh sản phẩm, banner, logo
 │   ├── index.html               # Trang chủ
 │   ├── products.html            # Trang danh mục & chi tiết sản phẩm
@@ -56,27 +57,63 @@ Minh-Aquarium/
 │   │   ├── 📁 components/       # Header, Footer, ChatWidget, ProductCard...
 │   │   ├── 📁 pages/            # HomePage, ProductsPage, CartPage...
 │   │   ├── 📁 composables/      # Quản lý state giỏ hàng (useCart)
-│   │   └── 📁 data/             # Mock data & cấu hình
+│   │   └── 📁 data/             # Mock data & cấu hình danh mục
 │   └── vite.config.js           # Cấu hình Vite cho Vue 3
 │
-├── 📁 server/                    # Backend Node.js & Express
-│   ├── 📁 db/
+├── 📁 server/                    # Backend Node.js & Express REST API (Kiến trúc phân tầng)
+│   ├── 📁 config/               # Cấu hình môi trường (env.js) và kết nối MySQL (db.js)
+│   ├── 📁 controllers/          # Bộ điều khiển HTTP (auth, cart, chat, order, product)
+│   ├── 📁 db/                   # Schema cơ sở dữ liệu và các tệp migration
+│   │   ├── 📁 migrations/       # Idempotent SQL migrations
 │   │   └── database.sql         # Schema khởi tạo database MySQL
-│   └── server.js                # API RESTful, tích hợp Gemini AI & MySQL
+│   ├── 📁 middleware/           # Cache headers, xử lý lỗi tập trung, rate limiting
+│   ├── 📁 repositories/         # Tầng truy xuất dữ liệu (Data Access Layer)
+│   ├── 📁 routes/               # Khai báo định tuyến API (/api, /api/chat)
+│   ├── 📁 services/             # Nghiệp vụ logic (Business Logic Layer)
+│   ├── app.js                   # Cấu hình ứng dụng Express
+│   └── server.js                # Điểm khởi chạy HTTP server & warmup cache
 │
-├── 📁 scripts/                   # Bộ script bảo trì & tiện ích
-│   ├── seed_database_from_products.js  # Tự động trích xuất sản phẩm từ HTML vào DB
-│   └── run_playwright.js        # Script chạy test Playwright E2E
+├── 📁 scripts/                   # Script vận hành cốt lõi (Core Operational Scripts)
+│   ├── migrate.js               # Thực thi migration cơ sở dữ liệu MySQL
+│   ├── seed_database_from_products.js # Trích xuất sản phẩm từ HTML nạp vào CSDL
+│   ├── run_playwright.js        # Wrapper thực thi kiểm thử Playwright E2E
+│   ├── benchmark_runner.js      # Đo kiểm hiệu năng API & latency baselines
+│   └── README.md                # Hướng dẫn chi tiết các script vận hành
 │
-├── 📁 tools/                     # Công cụ tiện ích dòng lệnh (CLI Chatbot)
-│   └── chatbot.py               # Thử nghiệm chatbot Gemini qua Terminal
+├── 📁 tools/                     # Công cụ bảo trì & phát triển theo module
+│   ├── 📁 catalog/              # Công cụ bảo trì catalog sản phẩm & giá (Python)
+│   │   ├── add_equipment_products.py
+│   │   ├── add_lights.py
+│   │   ├── build_products.py
+│   │   ├── cache_buster_all.py
+│   │   ├── fix_encoding.py
+│   │   ├── update_prices.py
+│   │   ├── update_sidebar.py
+│   │   └── update_sidebar_links.py
+│   ├── 📁 images/               # Công cụ xử lý đồ họa, tách nền & cắt banner (Python)
+│   │   ├── fix_logo_path.py
+│   │   ├── remove_bg.py
+│   │   ├── remove_bg_batch.py
+│   │   ├── split_image.py
+│   │   └── split_image_hori.py
+│   ├── 📁 chatbot/              # Công cụ tương tác chatbot qua dòng lệnh
+│   │   └── chatbot.py           # CLI chatbot hỗ trợ tư vấn qua Terminal
+│   └── README.md                # Tài liệu mô tả các công cụ trong tools/
 │
-├── 📁 docs/                      # Tài liệu dự án
+├── 📁 tests/                     # Toàn bộ bộ kiểm thử tự động
+│   ├── 📁 api/                  # Kiểm thử tích hợp Express REST API (api.test.js)
+│   ├── 📁 db/                   # Kiểm thử CSDL, migration, constraint (test_db.js)
+│   └── 📁 e2e/                  # Bộ kiểm thử Playwright browser E2E
+│
+├── 📁 docs/                      # Tài liệu dự án & tri thức AI
 │   ├── FEATURES.md              # Bảng đặc tả chi tiết toàn bộ tính năng
-│   └── nd.text                  # Ngữ cảnh tri thức cho trợ lý ảo RAG
+│   ├── SRS_Minh_Aquarium.md     # Tài liệu yêu cầu phần mềm chi tiết
+│   └── nd.text                  # Ngữ cảnh tri thức cho trợ lý ảo Gemini RAG
 │
-├── 📁 tests/                     # Kiểm thử tự động (E2E Tests)
-│   └── 📁 e2e/                  # Test suites: cart, login, products, smoke
+├── 📁 benchmarks/                # Dữ liệu đo kiểm hiệu năng & báo cáo so sánh
+│   ├── baseline.json
+│   ├── post_optimization.json
+│   └── comparison.md
 │
 ├── .env.example                 # Mẫu cấu hình biến môi trường
 ├── .dockerignore                # Cấu hình loại trừ cho Docker
@@ -85,7 +122,7 @@ Minh-Aquarium/
 ├── docker-compose.yml           # Khởi chạy fullstack (API + MySQL)
 ├── package.json                 # Quản lý thư viện và scripts dự án
 ├── playwright.config.js         # Cấu hình Playwright test runner
-└── vite.config.js               # Cấu hình Vite root
+└── vite.config.js               # Cấu hình Vite root Multi-page
 ```
 
 ---
@@ -244,10 +281,14 @@ $env:PLAYWRIGHT_START_WEBSERVER="1"; $env:PLAYWRIGHT_BASE_URL="http://127.0.0.1:
 | `npm run preview` | Xem trước production build của Vite |
 | `npm run start` | Khởi động máy chủ Backend Express (`http://localhost:3000`) |
 | `npm run frontend:dev` | Bật Dev Server cho ứng dụng Vue 3 SPA |
-| `npm run frontend:build` | Build production cho ứng dụng Vue 3 SPA |
+| `npm run frontend:build` | Build production cho ứng dụng Vue 3 SPA vào `frontend/dist/` |
+| `npm run migrate` | Chạy migration cơ sở dữ liệu MySQL |
 | `npm run seed:db` | Đồng bộ dữ liệu sản phẩm từ HTML vào MySQL |
-| `npm run test:e2e` | Chạy bộ kiểm thử tự động Playwright |
-| `npm run chatbot:cli` | Chạy chatbot tư vấn bằng giao diện dòng lệnh Python |
+| `npm run test:db` | Chạy bộ kiểm thử CSDL & migrations (`tests/db/test_db.js`) |
+| `npm run test:api` | Chạy bộ kiểm thử tích hợp API endpoints (`tests/api/api.test.js`) |
+| `npm test` | Chạy toàn bộ test suite hồi quy (`test:db` && `test:api`) |
+| `npm run test:e2e` | Chạy bộ kiểm thử tự động trình duyệt Playwright E2E |
+| `npm run chatbot:cli` | Chạy chatbot tư vấn bằng giao diện dòng lệnh Python (`tools/chatbot/chatbot.py`) |
 
 ---
 

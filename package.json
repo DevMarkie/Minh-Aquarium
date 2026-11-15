@@ -9,7 +9,7 @@
     "start": "node server/server.js",
     "frontend:dev": "npm --prefix frontend run dev",
     "frontend:build": "npm --prefix frontend run build",
-    "chatbot:cli": "python tools/chatbot.py",
+    "chatbot:cli": "python tools/chatbot/chatbot.py",
     "migrate": "node scripts/migrate.js",
     "seed:db": "node scripts/seed_database_from_products.js",
     "test:db": "node tests/db/test_db.js",

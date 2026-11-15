@@ -1,6 +1,8 @@
+import os
 import re
 
-html_file = "src/products.html"
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+html_file = os.path.join(PROJECT_ROOT, "src", "products.html")
 
 with open(html_file, 'r', encoding='utf-8') as f:
     text = f.read()

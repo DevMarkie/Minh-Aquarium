@@ -1,4 +1,7 @@
+import os
 import glob
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 def hybrid_decode(c):
     try:
@@ -42,6 +45,6 @@ def fix_file(filepath):
     except Exception as e:
         print(f"Error fixing {filepath}: {e}")
 
-html_files = glob.glob('*.html')
+html_files = glob.glob(os.path.join(PROJECT_ROOT, "src", "*.html"))
 for file in html_files:
     fix_file(file)

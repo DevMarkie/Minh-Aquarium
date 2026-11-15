@@ -3,7 +3,9 @@ import re
 import urllib.parse
 import random
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 target_dir = r"src\assets\images\đèn thủy sinh"
+abs_target_dir = os.path.join(PROJECT_ROOT, target_dir)
 cat_name = "Đèn Chiếu Sáng"
 
 html_blocks = []
@@ -18,8 +20,8 @@ price_rules = {
     "odyssea": [800000, 1200000]
 }
 
-if os.path.exists(target_dir):
-    for f in os.listdir(target_dir):
+if os.path.exists(abs_target_dir):
+    for f in os.listdir(abs_target_dir):
         if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp')):
             name = os.path.splitext(f)[0].title()
             unix_folder = target_dir.replace('\\', '/')
@@ -53,7 +55,7 @@ if os.path.exists(target_dir):
 
 print(f"Prepared {count} light products.")
 
-html_file = "src/products.html"
+html_file = os.path.join(PROJECT_ROOT, "src", "products.html")
 with open(html_file, 'r', encoding='utf-8') as f:
     content = f.read()
 

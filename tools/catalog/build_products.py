@@ -2,16 +2,18 @@ import os
 import re
 import urllib.parse
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 dirs = [r"src\assets\images\cá", r"src\assets\images\tép"]
-html_file = "src/products.html"
+html_file = os.path.join(PROJECT_ROOT, "src", "products.html")
 
 # Read all image names
 images_data = []
 
 for d in dirs:
+    abs_d = os.path.join(PROJECT_ROOT, d)
     cat_name = "Cá Cảnh" if "cá" in d else "Tép Cảnh"
-    if os.path.exists(d):
-        for f in os.listdir(d):
+    if os.path.exists(abs_d):
+        for f in os.listdir(abs_d):
             if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp')):
                 images_data.append((cat_name, f, d))
 

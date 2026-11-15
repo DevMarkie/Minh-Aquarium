@@ -1,7 +1,9 @@
+import os
 import glob
 import re
 
-html_files = glob.glob('src/*.html')
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+html_files = glob.glob(os.path.join(PROJECT_ROOT, "src", "*.html"))
 for file in html_files:
     try:
         with open(file, 'r', encoding='utf-8') as f:

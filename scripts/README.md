@@ -1,25 +1,42 @@
-# 🛠️ Minh Aquarium Scripts
+# 🛠️ Minh Aquarium Scripts (Operational & Lifecycle Scripts)
 
-Thư mục chứa các script hỗ trợ phát triển, bảo trì dữ liệu sản phẩm, xử lý hình ảnh và kiểm thử.
+Thư mục này chứa các script vận hành cốt lõi (core operational & lifecycle scripts) phục vụ quá trình khởi chạy, di trú cơ sở dữ liệu, nạp dữ liệu (seed), chạy kiểm thử tự động và đo kiểm hiệu năng hệ thống.
 
-## 📌 Danh Sách Scripts
+> **Lưu ý cấu trúc**: Các công cụ tiện ích bảo trì danh mục (catalog), xử lý hình ảnh (images) và chatbot thử nghiệm đã được tách riêng sang thư mục `tools/` (`tools/catalog/`, `tools/images/`, `tools/chatbot/`) để đảm bảo phân tách rõ ràng giữa tác vụ vận hành hệ thống và công cụ hỗ trợ phát triển.
 
-### 1. Dữ Liệu & Kiểm Thử
-- **`seed_database_from_products.js`**: Tự động parse sản phẩm từ file HTML (`src/products.html`) và nạp vào cơ sở dữ liệu MySQL (bảng `categories` và `products`).
-  - Chạy bằng: `npm run seed:db`
-- **`run_playwright.js`**: Wrapper chạy Playwright E2E tests với cấu hình môi trường chuẩn.
-  - Chạy bằng: `npm run test:e2e`
+---
 
-### 2. Cập Nhật Sản Phẩm & Nội Dung (Python)
-- **`add_equipment_products.py`**: Bổ sung các thiết bị máy lọc, phụ kiện hồ cá vào catalog HTML.
-- **`add_lights.py`**: Bổ sung các dòng đèn LED thủy sinh chuyên dụng (Chihiros, Netlea, Flat...).
-- **`build_products.py`**: Tạo các khối product card HTML đồng nhất.
-- **`update_prices.py`**: Đồng bộ và định dạng lại giá bán hiển thị trên giao diện.
-- **`update_sidebar.py` & `update_sidebar_links.py`**: Cập nhật thanh danh mục và liên kết bộ lọc bên trái.
-- **`fix_encoding.py`**: Xử lý và chuẩn hóa mã hóa ký tự tiếng Việt UTF-8.
-- **`fix_logo_path.py`**: Chuẩn hóa đường dẫn tương đối tới logo trên toàn bộ các trang.
-- **`cache_buster_all.py`**: Gắn hash / version vào đường dẫn CSS/JS để chống cache trình duyệt khi cập nhật.
+## 📌 Danh Sách Script Vận Hành (`scripts/`)
 
-### 3. Xử Lý Hình Ảnh (Python)
-- **`remove_bg.py` & `remove_bg_batch.py`**: Tách nền ảnh sản phẩm sang dạng trong suốt (PNG).
-- **`split_image.py` & `split_image_hori.py`**: Cắt ghép các ảnh banner trang chủ theo tỷ lệ mong muốn.
+| Script | Ngôn ngữ | Lệnh thực thi | Mô tả chức năng |
+| :--- | :--- | :--- | :--- |
+| **`migrate.js`** | Node.js | `npm run migrate` | Tự động quét và áp dụng tuần tự các tệp migration SQL trong `server/db/migrations/` vào cơ sở dữ liệu MySQL, lưu trữ trạng thái vào bảng `schema_migrations` với cơ chế idempotent (an toàn khi chạy lặp lại). |
+| **`seed_database_from_products.js`** | Node.js | `npm run seed:db` | Phân tích cú pháp catalog HTML từ `src/products.html` và trích xuất danh mục, sản phẩm, hình ảnh để nạp đồng bộ vào cơ sở dữ liệu MySQL. |
+| **`run_playwright.js`** | Node.js | `npm run test:e2e` | Bộ thực thi Playwright End-to-End browser tests với cấu hình môi trường, tự động khởi tạo web server kiểm thử nếu được yêu cầu (`PLAYWRIGHT_START_WEBSERVER=1`). |
+| **`benchmark_runner.js`** | Node.js | `node scripts/benchmark_runner.js` | Đo kiểm hiệu năng và độ trễ các API endpoints bằng Autocannon, thu thập thông số Requests/sec, Latency p99, Throughput và xuất kết quả so sánh. |
+
+---
+
+## 🧰 Tham Chiếu Đến Các Công Cụ Tiện Ích (`tools/`)
+
+Các công cụ tiện ích bảo trì được tổ chức theo module trong thư mục `tools/`:
+
+- **`tools/catalog/`**: Các công cụ quản lý dữ liệu sản phẩm, cập nhật giá, đồng bộ sidebar và chuẩn hóa HTML:
+  - `add_equipment_products.py`: Bổ sung sản phẩm thiết bị & lọc vào catalog.
+  - `add_lights.py`: Bổ sung sản phẩm đèn chiếu sáng vào catalog.
+  - `build_products.py`: Tạo khối card sản phẩm chuẩn hóa.
+  - `cache_buster_all.py`: Đánh dấu version cache busting cho asset.
+  - `fix_encoding.py`: Khắc phục lỗi mã hóa ký tự UTF-8 tiếng Việt.
+  - `update_prices.py`: Cập nhật bảng giá sản phẩm tự động.
+  - `update_sidebar.py`: Cập nhật bộ đếm danh mục bên thanh điều hướng.
+  - `update_sidebar_links.py`: Cập nhật đường dẫn query lọc sản phẩm.
+
+- **`tools/images/`**: Các công cụ xử lý đồ họa, tách nền và cắt banner:
+  - `fix_logo_path.py`: Chuẩn hóa đường dẫn tương đối tới logo trên toàn bộ trang.
+  - `remove_bg.py`: Tách phông nền một ảnh sản phẩm đơn lẻ (sử dụng `rembg`).
+  - `remove_bg_batch.py`: Tách phông nền hàng loạt ảnh banner.
+  - `split_image.py`: Cắt ảnh banner lớn thành 3 phần theo kích thước ngang/dọc.
+  - `split_image_hori.py`: Cắt ảnh banner theo 3 lát cắt ngang.
+
+- **`tools/chatbot/`**: Công cụ CLI tương tác trực tiếp với Chatbot:
+  - `chatbot.py`: Trợ lý tư vấn khách hàng qua giao diện Terminal (`npm run chatbot:cli`).

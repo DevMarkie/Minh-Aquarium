@@ -4,6 +4,7 @@ package-lock.json.backup
 
 # Build outputs
 dist/
+frontend/dist/
 dist-ssr/
 build/
 

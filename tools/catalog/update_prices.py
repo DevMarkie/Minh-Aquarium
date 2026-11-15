@@ -1,6 +1,8 @@
+import os
 import re
 
-html_file = "src/products.html"
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+html_file = os.path.join(PROJECT_ROOT, "src", "products.html")
 
 # Typical VN market prices mapped by substrings
 price_map = {
